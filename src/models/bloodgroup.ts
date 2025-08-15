@@ -7,9 +7,17 @@ interface BloodGroupAttributes {
 
 type BloodGroupCreationAttributes = Optional<BloodGroupAttributes, 'bg_id'>;
 
-export class BloodGroup extends Model<BloodGroupAttributes, BloodGroupCreationAttributes> implements BloodGroupAttributes {
+export class BloodGroup extends Model<BloodGroupAttributes, BloodGroupCreationAttributes>
+  implements BloodGroupAttributes {
   public bg_id!: string;
   public blood_group!: string;
+
+  static associate(models: any) {
+    BloodGroup.hasMany(models.StudentProfile, {
+      foreignKey: 'bg_id',
+      as: 'students',
+    });
+  }
 }
 
 export const BloodGroupFactory = (sequelize: Sequelize) => {

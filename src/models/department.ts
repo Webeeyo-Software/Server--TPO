@@ -7,12 +7,16 @@ interface DepartmentAttributes {
 
 type DepartmentCreationAttributes = Optional<DepartmentAttributes, 'dept_id'>;
 
-export class Department extends Model<DepartmentAttributes, DepartmentCreationAttributes> implements DepartmentAttributes {
+export class Department extends Model<DepartmentAttributes, DepartmentCreationAttributes>
+  implements DepartmentAttributes {
   public dept_id!: string;
   public dept_name!: string;
 
   static associate(models: any) {
-    // Department.hasMany(models.StudentProfiles, { foreignKey: 'dept_id', as: 'students' });
+    Department.hasMany(models.StudentProfile, {
+      foreignKey: 'dept_id',
+      as: 'students',
+    });
   }
 }
 

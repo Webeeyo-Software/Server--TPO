@@ -7,9 +7,17 @@ interface DocumentTypeAttributes {
 
 type DocumentTypeCreationAttributes = Optional<DocumentTypeAttributes, 'id'>;
 
-export class DocumentType extends Model<DocumentTypeAttributes, DocumentTypeCreationAttributes> implements DocumentTypeAttributes {
+export class DocumentType extends Model<DocumentTypeAttributes, DocumentTypeCreationAttributes>
+  implements DocumentTypeAttributes {
   public id!: string;
   public type_name!: string;
+
+  static associate(models: any) {
+    DocumentType.hasMany(models.Document, {
+      foreignKey: 'type_id',
+      as: 'documents',
+    });
+  }
 }
 
 export const DocumentTypeFactory = (sequelize: Sequelize) => {
