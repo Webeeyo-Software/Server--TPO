@@ -56,3 +56,11 @@ export const syncDatabase = async () => {
 
 export default db;
 export { sequelize };
+
+
+
+
+
+
+
+
