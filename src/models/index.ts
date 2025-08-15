@@ -20,10 +20,7 @@ fs.readdirSync(__dirname)
       file.slice(-3) === '.ts'
     );
   })
-  .forEach((file: any) => {
-    const model = require(path.join(__dirname, file))(sequelize, DataTypes);
-    db[model.name] = model;
-  });
+  
 
   // console.log("Here is the DB Object : ", db);
 
