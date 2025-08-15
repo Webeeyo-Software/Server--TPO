@@ -1,4 +1,3 @@
-// models/Document.ts
 export default (sequelize: any, DataTypes: any) => {
     const Document = sequelize.define("Document", {
         id: {

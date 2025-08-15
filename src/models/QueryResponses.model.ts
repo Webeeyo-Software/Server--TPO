@@ -1,4 +1,3 @@
-// models/QueryResponse.ts
 export default (sequelize: any, DataTypes: any) => {
     const QueryResponse = sequelize.define("QueryResponse", {
         id: {

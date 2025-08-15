@@ -1,4 +1,3 @@
-// models/StudentQuery.ts
 export default (sequelize: any, DataTypes: any) => {
     const StudentQueries = sequelize.define("StudentQueries", {
         id: {

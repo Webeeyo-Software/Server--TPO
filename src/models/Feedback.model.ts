@@ -1,4 +1,3 @@
-// models/Feedback.ts
 export default (sequelize: any, DataTypes: any) => {
     const Feedback = sequelize.define("Feedback", {
         id: {

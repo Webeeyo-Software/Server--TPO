@@ -1,4 +1,3 @@
-// models/ApplicationStatus.ts
 export default (sequelize: any, DataTypes: any) => {
     const ApplicationStatus = sequelize.define("ApplicationStatus", {
         status_id: {
