@@ -1,34 +1,45 @@
-export default (sequelize: any, DataTypes: any) => {
-    const QueryResponse = sequelize.define("QueryResponse", {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        response: {
-            type: DataTypes.TEXT,
-            allowNull: false
-        },
-        responded_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
-        },
-        is_deleted: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-        }
-    }, {
-        tableName: 'QueryResponses',
-        timestamps: false
-    });
+import { Model, Optional, Sequelize, DataTypes } from 'sequelize';
 
-    QueryResponse.associate = (models: any) => {
-        QueryResponse.belongsTo(models.StudentQueries, { foreignKey: 'query_id', as: 'query' });
-        models.StudentQueries.hasMany(QueryResponse, { foreignKey: 'query_id', as: 'responses' });
+interface QueryResponseAttributes {
+  id: string;
+  query_id: string;
+  responder_id: string;
+  response: string;
+  responded_at?: Date;
+  is_deleted?: boolean;
+}
 
-        QueryResponse.belongsTo(models.User, { foreignKey: 'responder_id', as: 'responder' });
-        models.User.hasMany(QueryResponse, { foreignKey: 'responder_id', as: 'responsesGiven' });
-    };
+interface QueryResponseCreationAttributes extends Optional<QueryResponseAttributes, 'id' | 'responded_at' | 'is_deleted'> {}
 
-    return QueryResponse;
+module.exports = (sequelize: Sequelize) => {
+  class QueryResponse
+    extends Model<QueryResponseAttributes, QueryResponseCreationAttributes>
+    implements QueryResponseAttributes
+  {
+    public id!: string;
+    public query_id!: string;
+    public responder_id!: string;
+    public response!: string;
+    public responded_at?: Date;
+    public is_deleted?: boolean;
+
+    static associate(models: any) {
+      QueryResponse.belongsTo(models.StudentQuery, { foreignKey: 'query_id', as: 'query' });
+      QueryResponse.belongsTo(models.User, { foreignKey: 'responder_id', as: 'responder' });
+    }
+  }
+
+  QueryResponse.init(
+    {
+      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+      query_id: { type: DataTypes.UUID, allowNull: false },
+      responder_id: { type: DataTypes.UUID, allowNull: false },
+      response: { type: DataTypes.TEXT, allowNull: false },
+      responded_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+    },
+    { sequelize, modelName: 'QueryResponse', tableName: 'QueryResponses', timestamps: false }
+  );
+
+  return QueryResponse;
 };
