@@ -73,48 +73,62 @@ export class StudentProfile
   public is_deleted?: boolean;
 
   static associate(models: any) {
+  if(models.User){
     StudentProfile.belongsTo(models.User, {
       foreignKey: "user_id",
       as: "user",
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
+  }
+  if(models.Department){
     StudentProfile.belongsTo(models.Department, {
       foreignKey: "dept_id",
       as: "department",
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
+  }
+  if(models.BloodGroup){
     StudentProfile.belongsTo(models.BloodGroup, {
       foreignKey: "bg_id",
       as: "bloodGroup",
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
+  }
+  if(models.Nationality){
     StudentProfile.belongsTo(models.Nationality, {
       foreignKey: "nationality_id",
       as: "nationality",
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
+  }
+  if(models.Religion){
     StudentProfile.belongsTo(models.Religion, {
       foreignKey: "religion_id",
       as: "religion",
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
+  }
+  if(models.Category){
     StudentProfile.belongsTo(models.Category, {
       foreignKey: "category_id",
       as: "category",
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
+  }
+  if(models.AcademicDetails){
     StudentProfile.hasOne(models.AcademicDetails, {
       foreignKey: "registration_no",
       as: "academicDetails",
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
+  }
   }
 }
 
