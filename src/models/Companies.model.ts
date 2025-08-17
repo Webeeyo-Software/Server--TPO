@@ -40,26 +40,25 @@ export class Companies
   declare placementDrives?: any[];
 
   static associate(models: any) {
-    if(models.User){
-    this.belongsTo(models.User, {
-      foreignKey: "user_id",
-      as: "user",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
-  }
+    if (models.User) {
+      this.belongsTo(models.User, {
+        foreignKey: "user_id",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+    }
 
-    if(models.PlacementDrives){
-    this.hasMany(models.PlacementDrives, {
-      foreignKey: "companies_id",
-      as: "placementDrives",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
+    if (models.PlacementDrives) {
+      this.hasMany(models.PlacementDrives, {
+        foreignKey: "companies_id",
+        as: "placementDrives",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
 }
-
 
 export default function initCompanies(sequelize: Sequelize): typeof Companies {
   Companies.init(

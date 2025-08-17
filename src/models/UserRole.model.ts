@@ -6,20 +6,15 @@ export interface UserRoleAttributes {
   role_id: string;
 }
 
-export interface UserRoleCreationAttributes
-  extends Optional<UserRoleAttributes, "user_role_id"> {}
+export interface UserRoleCreationAttributes extends Optional<UserRoleAttributes, "user_role_id"> {}
 
-export class UserRole
-  extends Model<UserRoleAttributes, UserRoleCreationAttributes>
-  implements UserRoleAttributes
-{
+export class UserRole extends Model<UserRoleAttributes, UserRoleCreationAttributes> implements UserRoleAttributes {
   public user_role_id!: string;
   public user_id!: string;
   public role_id!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-
 
   static associate(models: any) {
     if (models.User) {
@@ -42,7 +37,6 @@ export class UserRole
   }
 }
 
-
 export default function initUserRole(sequelize: Sequelize): typeof UserRole {
   UserRole.init(
     {
@@ -63,7 +57,7 @@ export default function initUserRole(sequelize: Sequelize): typeof UserRole {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Roles", 
+          model: "roles", 
           key: "role_id",
         },
       },
@@ -78,7 +72,7 @@ export default function initUserRole(sequelize: Sequelize): typeof UserRole {
       indexes: [
         {
           unique: true,
-          fields: ["user_id", "role_id"], 
+          fields: ["user_id", "role_id"],
         },
       ],
     }

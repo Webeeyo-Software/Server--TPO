@@ -5,26 +5,23 @@ export interface RoleAttributes {
   role_name: string;
 }
 
-export interface RoleCreationAttributes
-  extends Optional<RoleAttributes, "role_id"> {}
+export interface RoleCreationAttributes extends Optional<RoleAttributes, "role_id"> {}
 
-export class Role
-  extends Model<RoleAttributes, RoleCreationAttributes>
-  implements RoleAttributes
-{
+export class Role extends Model<RoleAttributes, RoleCreationAttributes> implements RoleAttributes {
   public role_id!: string;
   public role_name!: string;
 
   static associate(models: any) {
-    if(models.UserRole){
-    Role.hasMany(models.UserRole, {
-      foreignKey: "role_id",
-      as: "userRoles", 
-    });
+    if (models.UserRole) {
+      Role.hasOne(models.UserRole, {
+        foreignKey: "role_id",
+        as: "userRole",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+    }
   }
-  }
-  }
-
+}
 
 export default function RoleFactory(sequelize: Sequelize): typeof Role {
   Role.init(
