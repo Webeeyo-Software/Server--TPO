@@ -1,7 +1,7 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface CompaniesAttributes {
-  companiesId: string;
+  id: string;
   name: string;
   userId: string;
   description?: string;
@@ -17,7 +17,7 @@ interface CompaniesAttributes {
 
 type CompaniesCreationAttributes = Optional<
   CompaniesAttributes,
-  "companiesId" | "status" | "createdAt" | "isDeleted"
+  "id" | "status" | "createdAt" | "isDeleted"
 >;
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
@@ -25,7 +25,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     extends Model<CompaniesAttributes, CompaniesCreationAttributes>
     implements CompaniesAttributes
   {
-    public companiesId!: string;
+    public id!: string;
     public name!: string;
     public userId!: string;
     public description?: string;
@@ -59,7 +59,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   Companies.init(
     {
-      companiesId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,

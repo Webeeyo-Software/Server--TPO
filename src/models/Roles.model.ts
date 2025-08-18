@@ -1,19 +1,19 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface RolesAttributes {
-  roleId: string; 
+  id: string; 
   roleName: string;
 }
 
 interface RolesCreationAttributes
-  extends Optional<RolesAttributes, "roleId"> {}
+  extends Optional<RolesAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class Roles
     extends Model<RolesAttributes, RolesCreationAttributes>
     implements RolesAttributes
   {
-    public roleId!: string;
+    public id!: string;
     public roleName!: string;
 
     static associate(models: any) {
@@ -28,7 +28,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   Roles.init(
     {
-      roleId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
