@@ -24,12 +24,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 
-    // static associate(models: any) {
-    //   User.hasMany(models.Order, {
-    //     foreignKey: 'userId',
-    //     as: 'orders',
-    //   });
-    // }
+    static associate(models: any) {
+      User.hasMany(models.Order, {
+        foreignKey: 'userId',
+        as: 'orders',
+      });
+    }
   }
 
   User.init(

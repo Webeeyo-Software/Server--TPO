@@ -13,17 +13,15 @@ const sequelize = new Sequelize(dbConfig);
 
 // Read all model files in the current directory
 fs.readdirSync(__dirname)
-  .filter((file: string) => {
-    return (
-      file.indexOf('.') !== 0 && 
-      file !== basename && 
-      file.slice(-3) === '.ts'
-    );
-  })
-  .forEach((file: any) => {
-    const model = require(path.join(__dirname, file))(sequelize, DataTypes);
-    db[model.name] = model;
+  .filter((file: string) => file !== 'index.ts')
+  .forEach((file: string) => {
+    const modelModule = require(path.join(__dirname, file));
+    const model = modelModule.default || modelModule; // handle both cases
+    if (typeof model === 'function') {
+      model(sequelize, DataTypes);
+    }
   });
+
 
   // console.log("Here is the DB Object : ", db);
 
@@ -56,3 +54,11 @@ export const syncDatabase = async () => {
 
 export default db;
 export { sequelize };
+
+
+
+
+
+
+
+
