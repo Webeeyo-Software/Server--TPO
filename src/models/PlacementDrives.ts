@@ -55,7 +55,19 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                onUpdate: "CASCADE",
 
            });
-        }
+           PlacementDrives.belongsTo(models.Users, {
+               foreignKey: 'postedBy',
+               as: 'postedByUser',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+           });
+           PlacementDrives.hasMany(models.PlacementDriveQuestions, {
+               foreignKey: 'driveId',
+               as: 'questions',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+           });
+       }
     }
 
     PlacementDrives.init(
@@ -79,7 +91,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 allowNull: false,
             },
             postedBy: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
             },
             location: {
