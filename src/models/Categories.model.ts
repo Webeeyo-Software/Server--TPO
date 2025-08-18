@@ -2,38 +2,36 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface CategoryAttributes {
-  categoryId: number;
+  id: string;
   categoryName: string;
-  isdeleted?: boolean;
-  createdat?: Date;
+  isDeleted?: boolean;
+  createdAt?: Date;
 }
 
 interface CategoryCreationAttributes
-  extends Optional<CategoryAttributes, "categoryId" | "isdeleted" | "createdat"> {}
+  extends Optional<CategoryAttributes, "id" | "isDeleted" | "createdAt"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Categories
-    extends Model<CategoryAttributes, CategoryCreationAttributes>
+  class Categories extends Model<CategoryAttributes, CategoryCreationAttributes>
     implements CategoryAttributes
   {
-    public categoryId!: number;
+    public id!: string;
     public categoryName!: string;
-    public isdeleted?: boolean;
+    public isDeleted?: boolean;
     public readonly createdat?: Date;
 
     static associate(models: any) {
       Categories.hasOne(models.StudentProfiles, {
-        foreignKey: "categoryId",
+        foreignKey: "categoriesId",
         as: "studentProfiles",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
     }
   }
-
   Categories.init(
     {
-      categoryId: {
+        id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -43,12 +41,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         allowNull: false,
         unique: true,
       },
-      isdeleted: {
+      isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      createdat: {
+      createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
