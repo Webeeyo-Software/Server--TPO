@@ -29,12 +29,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     ApplicationQuestion.init(
         {
             question_id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
                 primaryKey: true
             },
             application_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false
             },
             question: {
@@ -53,7 +53,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         {
             sequelize,
             tableName: 'application_questions',
-            modelName: 'ApplicationQuestion'
+            modelName: 'ApplicationQuestion',
+            freezeTableName: true,
+            timestamps: false,
+            underscored: true,
         }
     );
 

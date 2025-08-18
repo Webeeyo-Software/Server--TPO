@@ -29,12 +29,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     OfferLetter.init(
         {
           offer_letter_id:{
-            type:DataTypes.INTEGER,
-            autoIncrement:true,
+            type:DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey:true,             
         },
         application_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.UUID,
             allowNull:false
         },
         file_url:{
@@ -57,7 +57,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     {
         sequelize,
         tableName: 'offer_letters',
-        modelName: 'OfferLetter'
+        modelName: 'OfferLetter',
+        freezeTableName: true,
+        timestamps: false,
+        underscored: true,
         }
     );
     return OfferLetter;

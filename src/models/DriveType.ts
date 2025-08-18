@@ -27,8 +27,8 @@ module.exports=(sequelize:Sequelize, DataTypes:any)=>{
      DriveTypes.init(
         {
             drive_type_id:{
-                type:DataTypes.INTEGER,
-                autoIncrement:true,
+                type:DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
                 primaryKey:true,
             },
             drive_type_name:{
@@ -41,6 +41,9 @@ module.exports=(sequelize:Sequelize, DataTypes:any)=>{
             sequelize,
             modelName:'DriveTypes',
             tableName:'DriveTypes',
+            freezeTableName: true,
+            timestamps: false,
+            underscored: true,
         }
      );
      return DriveTypes;

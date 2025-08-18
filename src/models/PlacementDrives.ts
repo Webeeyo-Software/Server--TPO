@@ -61,12 +61,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     PlacementDrives.init(
         {
             drive_id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
             company_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
             },
             position: {
@@ -98,7 +99,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 allowNull: false,
             },
             drive_type_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
             },
             application_deadline: {
@@ -114,6 +115,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
             sequelize,
             modelName: 'PlacementDrives',
             tableName: 'PlacementDrives',
+            freezeTableName: true,
+            timestamps: false,
+            underscored: true,
         }
     );
 

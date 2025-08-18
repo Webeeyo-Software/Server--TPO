@@ -23,11 +23,15 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         static associate(models: any) {
             Application.belongsTo(models.Users, {
                 foreignKey: 'user_id',
-                as: 'user'
+                as: 'user',
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
             });
             Application.belongsTo(models.PlacementDrives, {
                 foreignKey: 'drive_id',
-                as: 'drive'
+                as: 'drive',
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
             });
             Application.hasMany(models.ApplicationQuestions, {
                 foreignKey: 'status_id',
@@ -41,16 +45,16 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     Application.init(
         {
             application_id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
             user_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
             },
             drive_id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
             },
             document_url: {
@@ -58,7 +62,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 allowNull: false,
             },
             status_id: {
-                type: DataTypes.STRING,
+                type: DataTypes.UUID,
                 allowNull: false,
             },
             applied_at: {
@@ -74,6 +78,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
             sequelize,
             modelName: 'Application',
             tableName: 'Applications',
+            freezeTableName: true,
+            timestamps: false,
+            underscored: true,
+
         }
     );
 
