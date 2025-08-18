@@ -1,25 +1,25 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize";
 
 type ReligionAttributes = {
-  religion_id: string;
-  religion_name: string;
-  is_deleted?: boolean | false;
-  created_at?: Date;
+  religionId: string;
+  religionName: string;
+  isdeleted?: boolean | false;
+  createdat?: Date;
 };
 
-interface ReligionCreationAttributes extends Optional<ReligionAttributes, "religion_id"> {}
+interface ReligionCreationAttributes extends Optional<ReligionAttributes, "religionId"> {}
 
 module.exports = (sequelize: Sequelize) => {
-  class Religion extends Model<ReligionAttributes, ReligionCreationAttributes>
+  class Religions extends Model<ReligionAttributes, ReligionCreationAttributes>
     implements ReligionAttributes {
-    public religion_id!: string;
-    public religion_name!: string;
+    public religionId!: string;
+    public religionName!: string;
     public is_deleted!: boolean | false;
     public readonly created_at?: Date;
 
     static associate(models: any) {
-  Religion.hasOne(models.StudentProfiles, {
-     foreignKey: "religion_id", 
+  Religions.hasOne(models.StudentProfiles, {
+     foreignKey: "religionId", 
       as: "studentProfiles",   
         onDelete: "CASCADE",
         onUpdate: "CASCADE",            
@@ -27,30 +27,30 @@ module.exports = (sequelize: Sequelize) => {
     }
   }
 
-  Religion.init(
+  Religions.init(
     {
-      religion_id: {
+      religionId: {
         type: DataTypes.UUID,
        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      religion_name: {
+      religionName: {
         type: DataTypes.ENUM("Hindu", "Muslim", "Christian", "Buddha", "Other"),
         allowNull: false,
         unique: true,
       },
-      is_deleted: {
+      isdeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      created_at: {
+      createdat: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
     },
     {
       sequelize,
-      modelName: "Religion",
+      modelName: "Religions",
       tableName: "Religions",
       timestamps: false,
       freezeTableName: true,
@@ -59,5 +59,5 @@ module.exports = (sequelize: Sequelize) => {
     }
   );
 
-  return Religion;
+  return Religions;
 };

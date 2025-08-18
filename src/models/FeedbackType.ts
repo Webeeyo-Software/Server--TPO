@@ -1,44 +1,43 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize";
 
 type FeedbackTypeAttributes = {
-  feedback_type_id: number;
-  type_name: string;
+  feedbackTypeId: number;
+  typeName: string;
   description?: string;
-  is_deleted?: boolean | false;
-  created_at?: Date;
+  isdeleted?: boolean | false;
+  createdat?: Date;
 };
 
 interface FeedbackTypeCreationAttributes
-  extends Optional<FeedbackTypeAttributes, "feedback_type_id"> {}
+  extends Optional<FeedbackTypeAttributes, "feedbackTypeId"> {}
 
 module.exports = (sequelize: Sequelize) => {
-  class FeedbackType
-    extends Model<FeedbackTypeAttributes, FeedbackTypeCreationAttributes>
+  class FeedbackTypes extends Model<FeedbackTypeAttributes, FeedbackTypeCreationAttributes>
     implements FeedbackTypeAttributes {
-    public feedback_type_id!: number;
-    public type_name!: string;
+    public feedbackTypeId!: number;
+    public typeName!: string;
     public description?: string;
-    public is_deleted!: boolean | false;
+    public isdeleted!: boolean | false;
     public readonly created_at?: Date;
 
     static associate(models: any) {
-  FeedbackType.hasMany(models.Feedback, {
+  FeedbackTypes.hasMany(models.Feedback, {
      foreignKey: "feedback_type_id", 
      as: "id",   
      onDelete: "CASCADE",
-        onUpdate: "CASCADE",     
+     onUpdate: "CASCADE",     
 });
     }
   }
 
-  FeedbackType.init(
+  FeedbackTypes.init(
     {
-      feedback_type_id: {
+      feedbackTypeId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      type_name: {
+      typeName: {
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
@@ -47,18 +46,18 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      is_deleted: {
+      isdeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      created_at: {
+      createdat: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
     },
     {
       sequelize,
-      modelName: "FeedbackType",
+      modelName: "FeedbackTypes",
       tableName: "FeedbackTypes",
       timestamps: false,
       freezeTableName: true,
@@ -66,5 +65,5 @@ module.exports = (sequelize: Sequelize) => {
     }
   );
 
-  return FeedbackType;
+  return FeedbackTypes;
 };

@@ -2,28 +2,28 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface CategoryAttributes {
-  category_id: number;
-  category_name: string;
-  is_deleted?: boolean;
-  created_at?: Date;
+  categoryId: number;
+  categoryName: string;
+  isdeleted?: boolean;
+  createdat?: Date;
 }
 
 interface CategoryCreationAttributes
-  extends Optional<CategoryAttributes, "category_id" | "is_deleted" | "created_at"> {}
+  extends Optional<CategoryAttributes, "categoryId" | "isdeleted" | "createdat"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Category
+  class Categories
     extends Model<CategoryAttributes, CategoryCreationAttributes>
     implements CategoryAttributes
   {
-    public category_id!: number;
-    public category_name!: string;
-    public is_deleted?: boolean;
-    public readonly created_at?: Date;
+    public categoryId!: number;
+    public categoryName!: string;
+    public isdeleted?: boolean;
+    public readonly createdat?: Date;
 
     static associate(models: any) {
-      Category.hasOne(models.StudentProfiles, {
-        foreignKey: "category_id",
+      Categories.hasOne(models.StudentProfiles, {
+        foreignKey: "categoryId",
         as: "studentProfiles",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
@@ -31,31 +31,31 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     }
   }
 
-  Category.init(
+  Categories.init(
     {
-      category_id: {
+      categoryId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      category_name: {
+      categoryName: {
         type: DataTypes.ENUM("OPEN", "OBC", "SC", "ST", "NT", "EWS"),
         allowNull: false,
         unique: true,
       },
-      is_deleted: {
+      isdeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      created_at: {
+      createdat: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
     },
     {
       sequelize,
-      modelName: "Category",
+      modelName: "Categories",
       tableName: "Categories",
       freezeTableName: true,
       timestamps: false,   
@@ -63,5 +63,5 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     }
   );
 
-  return Category;
+  return Categories;
 };
