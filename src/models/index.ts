@@ -25,7 +25,7 @@ fs.readdirSync(__dirname)
   // console.log("Here is the DB Object : ", db);
 
   
-
+//.
 // Set up associations between models
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
