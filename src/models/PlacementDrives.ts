@@ -9,7 +9,7 @@ interface PlacementDrivesAttributes  {
     eligibilityCriteria: Text,
     jobDescription: Text,
     ctc: number,
-    driveTypeId: number,
+    driveTypeId: string,
     applicationDeadline: Date,
     isDeleted?: boolean | 'false',
     createdAt?: Date,
@@ -27,7 +27,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         public eligibilityCriteria!: Text;
         public jobDescription!: Text;
         public ctc!: number;
-        public driveTypeId!: number;
+        public driveTypeId!: string;
         public applicationDeadline!: Date;
         public isDeleted!: boolean | 'false';
 

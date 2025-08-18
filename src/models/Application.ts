@@ -1,8 +1,8 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface ApplicationAttributes {
     applicationId: string;
-    userId: number;
-    driveId: number;
+    userId:string;
+    driveId: string;
     documentUrl: string;
     statusId: string;
     appliedAt?: Date;
@@ -13,8 +13,8 @@ interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class Applications extends Model<ApplicationAttributes, ApplicationCreationAttributes> implements ApplicationAttributes {
         public applicationId!: string;
-        public userId!: number;
-        public driveId!: number;
+        public userId!: string;
+        public driveId!: string;
         public documentUrl!: string;
         public statusId!: string;
         public readonly createdAt?: Date;
