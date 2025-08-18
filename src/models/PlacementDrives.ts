@@ -34,7 +34,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         public readonly createdAt?: Date;
 
         static associate(models: any) {
-           PlacementDrives.hasMany(models.Application, {
+           PlacementDrives.hasMany(models.Applications, {
                foreignKey: 'driveId',
                as: 'applications',
                onDelete: "CASCADE",

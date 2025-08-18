@@ -18,9 +18,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         public isDeleted?: boolean;
 
             static associate(models: any) {
-                ApplicationQuestions.belongsTo(models.Application, {
+                ApplicationQuestions.belongsTo(models.Applications, {
                     foreignKey: 'applicationId',
-                    as: 'application',
+                    as: 'applications',
                     onDelete: "CASCADE",
                     onUpdate: "CASCADE",
                 });
