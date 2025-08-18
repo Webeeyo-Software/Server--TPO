@@ -41,7 +41,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       });
       Users.hasOne(models.StudentProfiles, {
         foreignKey: "userId",
-        as: "studentProfile",
+        as: "studentProfiles",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
@@ -101,7 +101,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
       Users.hasMany(models.TPORegistrations, {
         foreignKey: "userId",
-        as: "feedbacks",
+        as: "TPORegistrations",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
