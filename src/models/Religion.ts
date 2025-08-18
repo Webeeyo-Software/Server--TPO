@@ -1,35 +1,35 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize";
 
 type ReligionAttributes = {
-  religionId: string;
+  id: string;
   religionName: string;
-  isdeleted?: boolean | false;
-  createdat?: Date;
+  isDeleted?: boolean | false;
+  createdAt?: Date;
 };
 
-interface ReligionCreationAttributes extends Optional<ReligionAttributes, "religionId"> {}
+interface ReligionCreationAttributes extends Optional<ReligionAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize) => {
   class Religions extends Model<ReligionAttributes, ReligionCreationAttributes>
     implements ReligionAttributes {
-    public religionId!: string;
+    public id!: string;
     public religionName!: string;
-    public isdeleted!: boolean | false;
-    public readonly created_at?: Date;
+    public isDeleted!: boolean | false;
+    public readonly createdAt?: Date;
 
     static associate(models: any) {
-  Religions.hasOne(models.StudentProfiles, {
+    Religions.hasOne(models.StudentProfiles, {
      foreignKey: "religionId", 
-      as: "studentProfiles",   
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",            
+     as: "studentProfiles",   
+     onDelete: "CASCADE",
+     onUpdate: "CASCADE",            
 });
     }
   }
 
   Religions.init(
     {
-      religionId: {
+      id: {
         type: DataTypes.UUID,
        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -39,11 +39,11 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         unique: true,
       },
-      isdeleted: {
+      isDeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      createdat: {
+      createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },

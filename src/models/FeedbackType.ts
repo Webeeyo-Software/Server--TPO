@@ -1,37 +1,37 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize";
 
 type FeedbackTypeAttributes = {
-  feedbackTypeId: number;
+  id: string;
   typeName: string;
   description?: string;
   isdeleted?: boolean | false;
   createdat?: Date;
 };
 interface FeedbackTypeCreationAttributes
-  extends Optional<FeedbackTypeAttributes, "feedbackTypeId"> {}
+  extends Optional<FeedbackTypeAttributes, "id"> {}
 
-module.exports = (sequelize: Sequelize) => {
+module.exports = (sequelize: Sequelize,DataTypes: any) => {
   class FeedbackTypes extends Model<FeedbackTypeAttributes, FeedbackTypeCreationAttributes>
     implements FeedbackTypeAttributes {
-    public feedbackTypeId!: number;
+    public id!: string;
     public typeName!: string;
     public description?: string;
-    public isdeleted!: boolean | false;
-    public readonly created_at?: Date;
+    public isDeleted!: boolean | false;
+    public readonly createdAt?: Date;
 
     static associate(models: any) {
-  FeedbackTypes.hasMany(models.Feedback, {
-     foreignKey: "feedbackTypeId", 
+    FeedbackTypes.hasMany(models.Feedback, {
+     foreignKey: "FeedbackTypesId", 
      as: "id",   
      onDelete: "CASCADE",
      onUpdate: "CASCADE",     
-});
+    });
     }
   }
 
   FeedbackTypes.init(
     {
-      feedbackTypeId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
