@@ -1,45 +1,53 @@
-import { Model, Optional, Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface DocumentAttributes {
+interface DocumentsAttributes {
   id: string;
-  user_id: string;
-  type_id: string;
-  file_url: string;
-  uploaded_at?: Date;
-  is_deleted?: boolean;
+  userId: string;
+  typeId: string;
+  fileUrl: string;
+  uploadedAt?: Date;
+  isDeleted?: boolean;
 }
 
-interface DocumentCreationAttributes extends Optional<DocumentAttributes, 'id' | 'uploaded_at' | 'is_deleted'> {}
+interface DocumentsCreationAttributes
+  extends Optional<DocumentsAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize) => {
-  class Document
-    extends Model<DocumentAttributes, DocumentCreationAttributes>
-    implements DocumentAttributes
+  class Documents
+    extends Model<DocumentsAttributes, DocumentsCreationAttributes>
+    implements DocumentsAttributes
   {
     public id!: string;
-    public user_id!: string;
-    public type_id!: string;
-    public file_url!: string;
-    public uploaded_at?: Date;
-    public is_deleted?: boolean;
+    public userId!: string;
+    public typeId!: string;
+    public fileUrl!: string;
+    public uploadedAt?: Date;
+    public isDeleted?: boolean;
 
     static associate(models: any) {
-      Document.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
-      Document.belongsTo(models.DocumentType, { foreignKey: 'type_id', as: 'documentType' });
+      Documents.belongsTo(models.Users, { foreignKey: "userId", as: "user" });
+      Documents.belongsTo(models.DocumentTypes, { foreignKey: "typeId", as: "documentType" });
     }
   }
 
-  Document.init(
+  Documents.init(
     {
       id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-      user_id: { type: DataTypes.UUID, allowNull: false },
-      type_id: { type: DataTypes.UUID, allowNull: false },
-      file_url: { type: DataTypes.TEXT, allowNull: false },
-      uploaded_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+      userId: { type: DataTypes.UUID, allowNull: false },
+      typeId: { type: DataTypes.UUID, allowNull: false },
+      fileUrl: { type: DataTypes.TEXT, allowNull: false },
+      uploadedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
-    { sequelize, modelName: 'Document', tableName: 'Documents', timestamps: false }
+    {
+      sequelize,
+      modelName: "Documents",
+      tableName: "Documents",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
 
-  return Document;
+  return Documents;
 };

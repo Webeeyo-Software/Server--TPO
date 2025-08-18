@@ -1,17 +1,18 @@
-import { Model, Optional, Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface FeedbackAttributes {
   id: string;
-  submitted_by: string;
-  submitted_for: string;
-  feedback_type_id: string;
+  submittedBy: string;
+  submittedFor: string;
+  feedbackTypeId: string;
   rating: number;
   comments?: string;
-  created_at?: Date;
-  is_deleted?: boolean;
+  createdAt?: Date;
+  isDeleted?: boolean;
 }
 
-interface FeedbackCreationAttributes extends Optional<FeedbackAttributes, 'id' | 'created_at' | 'is_deleted'> {}
+interface FeedbackCreationAttributes
+  extends Optional<FeedbackAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize) => {
   class Feedback
@@ -19,33 +20,40 @@ module.exports = (sequelize: Sequelize) => {
     implements FeedbackAttributes
   {
     public id!: string;
-    public submitted_by!: string;
-    public submitted_for!: string;
-    public feedback_type_id!: string;
+    public submittedBy!: string;
+    public submittedFor!: string;
+    public feedbackTypeId!: string;
     public rating!: number;
     public comments?: string;
-    public created_at?: Date;
-    public is_deleted?: boolean;
+    public createdAt?: Date;
+    public isDeleted?: boolean;
 
     static associate(models: any) {
-      Feedback.belongsTo(models.User, { foreignKey: 'submitted_by', as: 'submittedBy' });
-      Feedback.belongsTo(models.User, { foreignKey: 'submitted_for', as: 'submittedFor' });
-      Feedback.belongsTo(models.FeedbackType, { foreignKey: 'feedback_type_id', as: 'feedbackType' });
+      Feedback.belongsTo(models.Users, { foreignKey: "submittedBy", as: "submittedBy" });
+      Feedback.belongsTo(models.Users, { foreignKey: "submittedFor", as: "submittedFor" });
+      Feedback.belongsTo(models.FeedbackTypes, { foreignKey: "feedbackTypeId", as: "feedbackType" });
     }
   }
 
   Feedback.init(
     {
       id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-      submitted_by: { type: DataTypes.UUID, allowNull: false },
-      submitted_for: { type: DataTypes.UUID, allowNull: false },
-      feedback_type_id: { type: DataTypes.UUID, allowNull: false },
+      submittedBy: { type: DataTypes.UUID, allowNull: false },
+      submittedFor: { type: DataTypes.UUID, allowNull: false },
+      feedbackTypeId: { type: DataTypes.UUID, allowNull: false },
       rating: { type: DataTypes.INTEGER, allowNull: false },
       comments: { type: DataTypes.TEXT },
-      created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+      createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
-    { sequelize, modelName: 'Feedback', tableName: 'Feedback', timestamps: false }
+    {
+      sequelize,
+      modelName: "Feedback",
+      tableName: "Feedback",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
 
   return Feedback;

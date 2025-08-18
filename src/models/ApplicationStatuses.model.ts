@@ -1,40 +1,51 @@
-import { Model, Optional, Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface ApplicationStatusAttributes {
-  status_id: string;
-  status_name: string;
+interface ApplicationStatusesAttributes {
+  statusId: string;
+  statusName: string;
 }
 
-interface ApplicationStatusCreationAttributes extends Optional<ApplicationStatusAttributes, 'status_id'> {}
+interface ApplicationStatusesCreationAttributes
+  extends Optional<ApplicationStatusesAttributes, "statusId"> {}
 
 module.exports = (sequelize: Sequelize) => {
-  class ApplicationStatus
-    extends Model<ApplicationStatusAttributes, ApplicationStatusCreationAttributes>
-    implements ApplicationStatusAttributes
+  class ApplicationStatuses
+    extends Model<ApplicationStatusesAttributes, ApplicationStatusesCreationAttributes>
+    implements ApplicationStatusesAttributes
   {
-    public status_id!: string;
-    public status_name!: string;
+    public statusId!: string;
+    public statusName!: string;
 
     static associate(models: any) {
-       ApplicationStatus.hasMany(models.Application, { foreignKey: 'status_id', as: 'applications' });
+      ApplicationStatuses.hasMany(models.Applications, {
+        foreignKey: "statusId",
+        as: "applications",
+      });
     }
   }
 
-  ApplicationStatus.init(
+  ApplicationStatuses.init(
     {
-      status_id: {
+      statusId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      status_name: {
+      statusName: {
         type: DataTypes.STRING(30),
         allowNull: false,
         unique: true,
       },
     },
-    { sequelize, modelName: 'ApplicationStatus', tableName: 'ApplicationStatuses', timestamps: false }
+    {
+      sequelize,
+      modelName: "ApplicationStatuses",
+      tableName: "ApplicationStatuses",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
 
-  return ApplicationStatus;
+  return ApplicationStatuses;
 };

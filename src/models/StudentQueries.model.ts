@@ -1,45 +1,53 @@
-import { Model, Optional, Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface StudentQueryAttributes {
+interface StudentQueriesAttributes {
   id: string;
-  user_id: string;
+  userId: string;
   question: string;
-  status: 'Pending' | 'Answered' | 'Closed';
-  created_at?: Date;
-  is_deleted?: boolean;
+  status: "Pending" | "Answered" | "Closed";
+  createdAt?: Date;
+  isDeleted?: boolean;
 }
 
-interface StudentQueryCreationAttributes extends Optional<StudentQueryAttributes, 'id' | 'created_at' | 'is_deleted'> {}
+interface StudentQueriesCreationAttributes
+  extends Optional<StudentQueriesAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize) => {
-  class StudentQuery
-    extends Model<StudentQueryAttributes, StudentQueryCreationAttributes>
-    implements StudentQueryAttributes
+  class StudentQueries
+    extends Model<StudentQueriesAttributes, StudentQueriesCreationAttributes>
+    implements StudentQueriesAttributes
   {
     public id!: string;
-    public user_id!: string;
+    public userId!: string;
     public question!: string;
-    public status!: 'Pending' | 'Answered' | 'Closed';
-    public created_at?: Date;
-    public is_deleted?: boolean;
+    public status!: "Pending" | "Answered" | "Closed";
+    public createdAt?: Date;
+    public isDeleted?: boolean;
 
     static associate(models: any) {
-      StudentQuery.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
-      StudentQuery.hasMany(models.QueryResponse, { foreignKey: 'query_id', as: 'responses' });
+      StudentQueries.belongsTo(models.Users, { foreignKey: "userId", as: "user" });
+      StudentQueries.hasMany(models.QueryResponses, { foreignKey: "queryId", as: "responses" });
     }
   }
 
-  StudentQuery.init(
+  StudentQueries.init(
     {
       id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-      user_id: { type: DataTypes.UUID, allowNull: false },
+      userId: { type: DataTypes.UUID, allowNull: false },
       question: { type: DataTypes.TEXT, allowNull: false },
-      status: { type: DataTypes.ENUM('Pending', 'Answered', 'Closed'), defaultValue: 'Pending' },
-      created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+      status: { type: DataTypes.ENUM("Pending", "Answered", "Closed"), defaultValue: "Pending" },
+      createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
-    { sequelize, modelName: 'StudentQuery', tableName: 'StudentQueries', timestamps: false }
+    {
+      sequelize,
+      modelName: "StudentQueries",
+      tableName: "StudentQueries",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
 
-  return StudentQuery;
+  return StudentQueries;
 };
