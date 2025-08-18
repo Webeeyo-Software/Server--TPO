@@ -63,7 +63,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
            });
            PlacementDrives.hasMany(models.PlacementDriveQuestions, {
                foreignKey: 'driveId',
-               as: 'questions',
+               as: 'attachments',
                onDelete: "CASCADE",
                onUpdate: "CASCADE",
            });
@@ -79,7 +79,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
             },
             companyId: {
                 type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
             },
             position: {
