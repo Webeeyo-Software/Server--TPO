@@ -61,7 +61,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                onDelete: "CASCADE",
                onUpdate: "CASCADE",
            });
-           PlacementDrives.hasMany(models.attachments, {
+           PlacementDrives.hasMany(models.Attachments, {
                foreignKey: 'driveId',
                as: 'attachments',
                onDelete: "CASCADE",
