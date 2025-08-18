@@ -26,7 +26,7 @@ fs.readdirSync(__dirname)
   // console.log("Here is the DB Object : ", db);
 
   
-
+//.
 // Set up associations between models
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
@@ -44,8 +44,8 @@ export const syncDatabase = async () => {
         await sequelize.authenticate();
         console.log('Database Connection has been established successfully.');
 
-        // await sequelize.sync({force: false});
-        // console.log('Database & tables created!');
+        await sequelize.sync({force: false});
+        console.log('Database & tables created!');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
         process.exit(1);
