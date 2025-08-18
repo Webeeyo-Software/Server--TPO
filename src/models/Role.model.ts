@@ -1,32 +1,31 @@
-import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-export interface RoleAttributes {
-  role_id: string;
+interface RoleAttributes {
+  role_id: string; 
   role_name: string;
 }
 
-export interface RoleCreationAttributes
+interface RoleCreationAttributes
   extends Optional<RoleAttributes, "role_id"> {}
 
-export class Role
-  extends Model<RoleAttributes, RoleCreationAttributes>
-  implements RoleAttributes
-{
-  public role_id!: string;
-  public role_name!: string;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class Role
+    extends Model<RoleAttributes, RoleCreationAttributes>
+    implements RoleAttributes
+  {
+    public role_id!: string;
+    public role_name!: string;
 
-  static associate(models: any) {
-    if(models.UserRole){
-    Role.hasMany(models.UserRole, {
-      foreignKey: "role_id",
-      as: "userRoles", 
-    });
-  }
-  }
+    static associate(models: any) {
+        Role.hasOne(models.UserRole, {
+          foreignKey: "role_id",
+          as: "userRole",
+          onDelete: "CASCADE",
+          onUpdate: "CASCADE",
+        });
+    }
   }
 
-
-export default function RoleFactory(sequelize: Sequelize): typeof Role {
   Role.init(
     {
       role_id: {
@@ -46,11 +45,11 @@ export default function RoleFactory(sequelize: Sequelize): typeof Role {
     {
       sequelize,
       modelName: "Role",
-      tableName: "roles",
-      freezeTableName: true,
-      timestamps: false,
+      tableName: "roles", 
+      freezeTableName: true, 
+      timestamps: false, 
     }
   );
 
   return Role;
-}
+};

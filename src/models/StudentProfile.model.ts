@@ -1,6 +1,6 @@
-import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-export interface StudentProfileAttributes {
+interface StudentProfileAttributes {
   registration_no: bigint;
   user_id: string;
   fname: string;
@@ -27,7 +27,7 @@ export interface StudentProfileAttributes {
   is_deleted?: boolean;
 }
 
-export interface StudentProfileCreationAttributes
+interface StudentProfileCreationAttributes
   extends Optional<
     StudentProfileAttributes,
     | "registration_no"
@@ -39,103 +39,102 @@ export interface StudentProfileCreationAttributes
     | "is_deleted"
   > {}
 
-export class StudentProfile
-  extends Model<StudentProfileAttributes, StudentProfileCreationAttributes>
-  implements StudentProfileAttributes
-{
-  public registration_no!: bigint;
-  public user_id!: string;
-  public fname!: string;
-  public mname?: string;
-  public lname!: string;
-  public gender!: "Male" | "Female" | "Other";
-  public dob!: Date;
-  public mobile!: string;
-  public address!: string;
-  public dept_id!: string;
-  public year!: "FE" | "SE" | "TE" | "BE";
-  public bg_id!: string;
-  public aadhar_number!: string;
-  public nationality_id!: string;
-  public religion_id!: string;
-  public category_id!: string;
-  public guardian_name!: string;
-  public guardian_contact!: string;
-  public admission_date!: Date;
-  public linkedin?: string;
-  public github?: string;
-  public created_at?: Date;
-  public updated_at?: Date;
-  public is_deleted?: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class StudentProfile
+    extends Model<StudentProfileAttributes, StudentProfileCreationAttributes>
+    implements StudentProfileAttributes
+  {
+    public registration_no!: bigint;
+    public user_id!: string;
+    public fname!: string;
+    public mname?: string;
+    public lname!: string;
+    public gender!: "Male" | "Female" | "Other";
+    public dob!: Date;
+    public mobile!: string;
+    public address!: string;
+    public dept_id!: string;
+    public year!: "FE" | "SE" | "TE" | "BE";
+    public bg_id!: string;
+    public aadhar_number!: string;
+    public nationality_id!: string;
+    public religion_id!: string;
+    public category_id!: string;
+    public guardian_name!: string;
+    public guardian_contact!: string;
+    public admission_date!: Date;
+    public linkedin?: string;
+    public github?: string;
+    public created_at?: Date;
+    public updated_at?: Date;
+    public is_deleted?: boolean;
 
-  static associate(models: any) {
-    if (models.User) {
-      StudentProfile.belongsTo(models.User, {
-        foreignKey: "user_id",
-        as: "user",
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      });
-    }
+    static associate(models: any) {
+      if (models.User) {
+        StudentProfile.belongsTo(models.User, {
+          foreignKey: "user_id",
+          as: "user",
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        });
+      }
 
-    if (models.Department) {
-      StudentProfile.belongsTo(models.Department, {
-        foreignKey: "dept_id",
-        as: "department",
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      });
-    }
+      if (models.Department) {
+        StudentProfile.belongsTo(models.Department, {
+          foreignKey: "dept_id",
+          as: "department",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+        });
+      }
 
-    if (models.BloodGroup) {
-      StudentProfile.belongsTo(models.BloodGroup, {
-        foreignKey: "bg_id",
-        as: "bloodGroup",
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      });
-    }
-    if (models.Nationality) {
-      StudentProfile.belongsTo(models.Nationality, {
-        foreignKey: "nationality_id",
-        as: "nationality",
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      });
-    }
+      if (models.BloodGroup) {
+        StudentProfile.belongsTo(models.BloodGroup, {
+          foreignKey: "bg_id",
+          as: "bloodGroup",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+        });
+      }
 
-    if (models.Religion) {
-      StudentProfile.belongsTo(models.Religion, {
-        foreignKey: "religion_id",
-        as: "religion",
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      });
-    }
+      if (models.Nationality) {
+        StudentProfile.belongsTo(models.Nationality, {
+          foreignKey: "nationality_id",
+          as: "nationality",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+        });
+      }
 
-    if (models.Category) {
-      StudentProfile.belongsTo(models.Category, {
-        foreignKey: "category_id",
-        as: "category",
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      });
-    }
+      if (models.Religion) {
+        StudentProfile.belongsTo(models.Religion, {
+          foreignKey: "religion_id",
+          as: "religion",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+        });
+      }
 
-    if (models.AcademicDetails) {
-    StudentProfile.hasOne(models.AcademicDetails, {
-      foreignKey: "registration_no",
-      as: "academicDetails",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    });
+      if (models.Category) {
+        StudentProfile.belongsTo(models.Category, {
+          foreignKey: "category_id",
+          as: "category",
+          onUpdate: "CASCADE",
+          onDelete: "SET NULL",
+        });
+      }
+
+      if (models.AcademicDetails) {
+        StudentProfile.hasOne(models.AcademicDetails, {
+          foreignKey: "registration_no",
+          as: "academicDetails",
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
+        });
+      }
+    }
   }
-  }
-}
 
-export default function initStudentProfile(
-  sequelize: Sequelize
-): typeof StudentProfile {
   StudentProfile.init(
     {
       registration_no: {
@@ -174,9 +173,10 @@ export default function initStudentProfile(
       sequelize,
       modelName: "StudentProfile",
       tableName: "StudentProfiles",
-      timestamps: false,
+      freezeTableName: true,
+      timestamps: false, 
     }
   );
 
   return StudentProfile;
-}
+};

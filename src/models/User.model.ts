@@ -1,8 +1,7 @@
-import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 import bcrypt from "bcryptjs";
-import { StudentProfile } from "./StudentProfile.model";
 
-export interface UserAttributes {
+interface UserAttributes {
   id: string;
   email: string;
   password: string;
@@ -13,46 +12,49 @@ export interface UserAttributes {
   is_deleted?: boolean;
 }
 
-export interface UserCreationAttributes
-  extends Optional<UserAttributes, "created_at" | "updated_at" | "is_deleted"> {}
+interface UserCreationAttributes
+  extends Optional<
+    UserAttributes,
+    "id" | "created_at" | "updated_at" | "is_deleted"
+  > {}
 
-export class User
-  extends Model<UserAttributes, UserCreationAttributes>
-  implements UserAttributes
-{
-  public id!: string;
-  public email!: string;
-  public password!: string;
-  public firstName!: string;
-  public lastName!: string;
-  public created_at?: Date;
-  public updated_at?: Date;
-  public is_deleted?: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class User
+    extends Model<UserAttributes, UserCreationAttributes>
+    implements UserAttributes
+  {
+    public id!: string;
+    public email!: string;
+    public password!: string;
+    public firstName!: string;
+    public lastName!: string;
+    public created_at?: Date;
+    public updated_at?: Date;
+    public is_deleted?: boolean;
 
+    static associate(models: any) {
+      User.hasOne(models.UserRole, {
+        foreignKey: "id",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+    }
 
-  static associate(models: any) {
-    User.hasOne(models.StudentProfile, {
-      foreignKey: "user_id",
-      as: "studentProfile",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
-
+    public async isValidPassword(password: string): Promise<boolean> {
+      return bcrypt.compare(password, this.password);
+    }
   }
-}
 
-
-export default function initUser(sequelize: Sequelize): typeof User {
   User.init(
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        unique: true,
       },
       email: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(150),
         allowNull: false,
         unique: true,
         validate: {
@@ -64,11 +66,11 @@ export default function initUser(sequelize: Sequelize): typeof User {
         allowNull: false,
       },
       firstName: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       lastName: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       created_at: {
@@ -77,7 +79,7 @@ export default function initUser(sequelize: Sequelize): typeof User {
       },
       updated_at: {
         type: DataTypes.DATE,
-        allowNull: true,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       is_deleted: {
         type: DataTypes.BOOLEAN,
@@ -91,12 +93,7 @@ export default function initUser(sequelize: Sequelize): typeof User {
       freezeTableName: true,
       timestamps: false,
       hooks: {
-        beforeCreate: async (user: User) => {
-          if (user.password) {
-            user.password = await bcrypt.hash(user.password, 10);
-          }
-        },
-        beforeUpdate: async (user: User) => {
+        beforeSave: async (user: User) => {
           if (user.changed("password")) {
             user.password = await bcrypt.hash(user.password, 10);
           }
@@ -106,4 +103,4 @@ export default function initUser(sequelize: Sequelize): typeof User {
   );
 
   return User;
-}
+};
