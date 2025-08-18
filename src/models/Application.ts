@@ -34,8 +34,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 onUpdate: "CASCADE",
             });
             Applications.hasMany(models.ApplicationQuestions, {
-                foreignKey: 'statusId',
-                as: 'ApplicationStatuses',
+                foreignKey: 'applicationId',
+                as: 'ApplicationQuestions',
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             });
