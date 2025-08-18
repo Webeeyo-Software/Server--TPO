@@ -1,43 +1,43 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface OfferLetterAttributes {
-    offer_letter_id: number;
-    application_id: number;
-    file_url: Text;
+    offerLetterId: number;
+    applicationId: number;
+    fileUrl: Text;
     type: 'PDF' | 'DOCX' | 'IMAGE';
-    issued_at?: Date;
-    is_deleted?: boolean;
+    issuedAt?: Date;
+    isDeleted?: boolean;
 }
-interface OfferLetterCreationAttributes extends Optional<OfferLetterAttributes, 'offer_letter_id'> {}
+interface OfferLetterCreationAttributes extends Optional<OfferLetterAttributes, 'offerLetterId'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-    class OfferLetter extends Model<OfferLetterAttributes, OfferLetterCreationAttributes> implements OfferLetterAttributes {
-        public offer_letter_id!: number;
-        public application_id!: number;
-        public file_url!: Text;
+    class OfferLetters extends Model<OfferLetterAttributes, OfferLetterCreationAttributes> implements OfferLetterAttributes {
+        public offerLetterId!: number;
+        public applicationId!: number;
+        public fileUrl!: Text;
         public type!: 'PDF' | 'DOCX' | 'IMAGE';
-        public issued_at?: Date;
-        public is_deleted?: boolean;
+        public issuedAt?: Date;
+        public isDeleted?: boolean;
 
         static associate(models: any) {
-            OfferLetter.belongsTo(models.Application, {
-                foreignKey: 'application_id',
-                as: 'application',
+            OfferLetters.belongsTo(models.Application, {
+                foreignKey: 'applicationId',
+                as: 'applications',
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             });
         }
     }
-    OfferLetter.init(
+    OfferLetters.init(
         {
-          offer_letter_id:{
+          offerLetterId:{
             type:DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey:true,             
         },
-        application_id:{
+        applicationId:{
             type:DataTypes.UUID,
             allowNull:false
         },
-        file_url:{
+        fileUrl:{
             type:DataTypes.TEXT,
             allowNull:false
         },
@@ -45,23 +45,23 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
             type:DataTypes.ENUM('PDF', 'DOCX', 'IMAGE'),
             allowNull:false
         },
-        issued_at:{
+        issuedAt:{
             type:DataTypes.DATE,
             allowNull:true
         },
-        is_deleted:{
+        isDeleted:{
             type:DataTypes.BOOLEAN,
             defaultValue:false
         }
     },
     {
         sequelize,
-        tableName: 'offer_letters',
-        modelName: 'OfferLetter',
+        tableName: 'offerLetters',
+        modelName: 'OfferLetters',
         freezeTableName: true,
         timestamps: false,
         underscored: true,
         }
     );
-    return OfferLetter;
+    return OfferLetters;
 };

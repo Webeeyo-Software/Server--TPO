@@ -1,22 +1,22 @@
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize';
 interface DriveTypeAttributes {
-    drive_type_id:number;
-    drive_type_name:string;
+    driveTypeId:number;
+    driveTypeName:string;
 
 }
-interface DriveCreationAttributes extends Optional<DriveTypeAttributes,'drive_type_id'>{}
+interface DriveCreationAttributes extends Optional<DriveTypeAttributes,'driveTypeId'>{}
 module.exports=(sequelize:Sequelize, DataTypes:any)=>{
     class DriveTypes extends Model<DriveTypeAttributes, DriveCreationAttributes> implements DriveTypeAttributes {
-       public drive_type_id!: number;
-       public drive_type_name!: string;
+       public driveTypeId!: number;
+       public driveTypeName!: string;
        public readonly createdAt!: Date;
        public readonly updatedAt!: Date;
 
         
        static associate(models:any) {
         DriveTypes.hasMany(models.PlacementDrives, {
-            foreignKey: 'drive_type_id',
-            as: 'placement_drives',
+            foreignKey: 'driveTypeId',
+            as: 'placementDrives',
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
 
@@ -26,12 +26,12 @@ module.exports=(sequelize:Sequelize, DataTypes:any)=>{
         }
      DriveTypes.init(
         {
-            drive_type_id:{
+            driveTypeId:{
                 type:DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey:true,
             },
-            drive_type_name:{
+            driveTypeName:{
                 type:DataTypes.STRING,
                 allowNull:false,
                 unique:true,

@@ -1,39 +1,39 @@
 import {Sequelize,Model,DataTypes, Optional} from 'sequelize';
 interface ApplicationQuestionAttributes{
-    question_id: number;
-    application_id: number;
+    questionId: number;
+    applicationId: number;
     question: Text;
     answer: Text;
-    is_deleted?: boolean;
+    isDeleted?: boolean;
 }
 
-interface ApplicationQuestionCreationAttributes extends Optional<ApplicationQuestionAttributes, 'question_id'> {}
+interface ApplicationQuestionCreationAttributes extends Optional<ApplicationQuestionAttributes, 'questionId'> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-    class ApplicationQuestion extends Model<ApplicationQuestionAttributes, ApplicationQuestionCreationAttributes> implements ApplicationQuestionAttributes {
-        public question_id!: number;
-        public application_id!: number;
+    class ApplicationQuestions extends Model<ApplicationQuestionAttributes, ApplicationQuestionCreationAttributes> implements ApplicationQuestionAttributes {
+        public questionId!: number;
+        public applicationId!: number;
         public question!: Text;
         public answer!: Text;
-        public is_deleted?: boolean;
+        public isDeleted?: boolean;
 
             static associate(models: any) {
-                ApplicationQuestion.belongsTo(models.Application, {
-                    foreignKey: 'application_id',
+                ApplicationQuestions.belongsTo(models.Application, {
+                    foreignKey: 'applicationId',
                     as: 'application',
                     onDelete: "CASCADE",
                     onUpdate: "CASCADE",
                 });
             }
         }
-    ApplicationQuestion.init(
+    ApplicationQuestions.init(
         {
-            question_id: {
+            questionId: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true
             },
-            application_id: {
+            applicationId: {
                 type: DataTypes.UUID,
                 allowNull: false
             },
@@ -45,14 +45,14 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 type: DataTypes.TEXT,
                 allowNull: false
             },
-            is_deleted: {
+            isDeleted: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
             }
         },
         {
             sequelize,
-            tableName: 'application_questions',
+            tableName: 'applicationQuestions',
             modelName: 'ApplicationQuestion',
             freezeTableName: true,
             timestamps: false,
@@ -60,5 +60,5 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         }
     );
 
-    return ApplicationQuestion;
+    return ApplicationQuestions;
 };

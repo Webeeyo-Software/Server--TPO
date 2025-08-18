@@ -1,55 +1,55 @@
 import { Sequelize,DataTypes, Optional,Model } from "sequelize";
 interface PlacementDrivesAttributes  {
-    drive_id: number,
-    company_id: number,
+    driveId: number,
+    companyId: number,
     position: string,
-    drive_date: Date,
-    posted_by: number,
+    driveDate: Date,
+    postedBy: number,
     location: string,
-    eligibility_criteria: Text,
-    job_desription: Text,
+    eligibilityCriteria: Text,
+    jobDescription: Text,
     ctc: number,
-    drive_type_id: number,
-    application_deadline: Date,
-    is_deleted?: boolean | 'false',
-    created_at?: Date,
+    driveTypeId: number,
+    applicationDeadline: Date,
+    isDeleted?: boolean | 'false',
+    createdAt?: Date,
 };
 
-interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'drive_id'> {}
+interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'driveId'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class PlacementDrives extends Model<PlacementDrivesAttributes, PlacementDrivesCreationAttributes> implements PlacementDrivesAttributes {
-        public drive_id!: number;
-        public company_id!: number;
+        public driveId!: number;
+        public companyId!: number;
         public position!: string;
-        public drive_date!: Date;
-        public posted_by!: number;
+        public driveDate!: Date;
+        public postedBy!: number;
         public location!: string;
-        public eligibility_criteria!: Text;
-        public job_desription!: Text;
+        public eligibilityCriteria!: Text;
+        public jobDescription!: Text;
         public ctc!: number;
-        public drive_type_id!: number;
-        public application_deadline!: Date;
-        public is_deleted!: boolean | 'false';
-        
-        public readonly created_at?: Date;
+        public driveTypeId!: number;
+        public applicationDeadline!: Date;
+        public isDeleted!: boolean | 'false';
+
+        public readonly createdAt?: Date;
 
         static associate(models: any) {
            PlacementDrives.hasMany(models.Application, {
-               foreignKey: 'drive_id',
+               foreignKey: 'driveId',
                as: 'applications',
                onDelete: "CASCADE",
                onUpdate: "CASCADE",
 
            })
            PlacementDrives.belongsTo(models.DriveTypes, {
-               foreignKey: 'drive_type_id',
-               as: 'drive_type',
+               foreignKey: 'driveTypeId',
+               as: 'driveType',
                onDelete: "CASCADE",
                onUpdate: "CASCADE",
 
            });
            PlacementDrives.belongsTo(models.Companies, {
-               foreignKey: 'company_id',
+               foreignKey: 'companyId',
                as: 'company',
                onDelete: "CASCADE",
                onUpdate: "CASCADE",
@@ -60,12 +60,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
     PlacementDrives.init(
         {
-            drive_id: {
+            driveId: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            company_id: {
+            companyId: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
@@ -74,11 +74,11 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            drive_date: {
+            driveDate: {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
-            posted_by: {
+            postedBy: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
@@ -86,11 +86,11 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            eligibility_criteria: {
+            eligibilityCriteria: {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
-            job_desription: {
+            jobDescription: {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
@@ -98,15 +98,15 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            drive_type_id: {
+            driveTypeId: {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
-            application_deadline: {
+            applicationDeadline: {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
-            is_deleted: {
+            isDeleted: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: 'false',
             },

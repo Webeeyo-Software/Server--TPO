@@ -1,40 +1,40 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface ApplicationAttributes {
-    application_id: number;
-    user_id: number;
-    drive_id: number;
-    document_url: string;
-    status_id: string;
-    applied_at?: Date;
-    updated_at?: Date;
+    applicationId: number;
+    userId: number;
+    driveId: number;
+    documentUrl: string;
+    statusId: string;
+    appliedAt?: Date;
+    updatedAt?: Date;
 }
 
-interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 'application_id'> {}
+interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 'applicationId'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-    class Application extends Model<ApplicationAttributes, ApplicationCreationAttributes> implements ApplicationAttributes {
-        public application_id!: number;
-        public user_id!: number;
-        public drive_id!: number;
-        public document_url!: string;
-        public status_id!: string;
-        public readonly created_at?: Date;
-        public readonly updated_at?: Date;
+    class Applications extends Model<ApplicationAttributes, ApplicationCreationAttributes> implements ApplicationAttributes {
+        public applicationId!: number;
+        public userId!: number;
+        public driveId!: number;
+        public documentUrl!: string;
+        public statusId!: string;
+        public readonly createdAt?: Date;
+        public readonly updatedAt?: Date;
 
         static associate(models: any) {
-            Application.belongsTo(models.Users, {
-                foreignKey: 'user_id',
-                as: 'user',
+            Applications.belongsTo(models.Users, {
+                foreignKey: 'userId',
+                as: 'users',
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             });
-            Application.belongsTo(models.PlacementDrives, {
-                foreignKey: 'drive_id',
-                as: 'drive',
+            Applications.belongsTo(models.PlacementDrives, {
+                foreignKey: 'driveId',
+                as: 'drives',
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             });
-            Application.hasMany(models.ApplicationQuestions, {
-                foreignKey: 'status_id',
+            Applications.hasMany(models.ApplicationQuestions, {
+                foreignKey: 'statusId',
                 as: 'ApplicationStatuses',
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
@@ -42,41 +42,41 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         }
     }
 
-    Application.init(
+    Applications.init(
         {
-            application_id: {
+            applicationId: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            user_id: {
+            userId: {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
-            drive_id: {
+            driveId: {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
-            document_url: {
+            documentUrl: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            status_id: {
+            statusId: {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
-            applied_at: {
+            appliedAt: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW,
             },
-            updated_at: {
+            updatedAt: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW,
             }
         },
         {
             sequelize,
-            modelName: 'Application',
+            modelName: 'Applications',
             tableName: 'Applications',
             freezeTableName: true,
             timestamps: false,
@@ -85,5 +85,5 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         }
     );
 
-    return Application;
+    return Applications;
 };

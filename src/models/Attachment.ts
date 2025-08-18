@@ -1,44 +1,44 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 import { sequelize } from '.';
 interface AttachmentAttributes {
-    attachment_id:number,
-    drive_id:number,
-    file_url:Text,
+    attachmentId:number,
+    driveId:number,
+    fileUrl:Text,
     type:'PDF'|'DOCX'|'IMAGE',
-    uploaded_at?:Date,
-    is_deleted?:boolean,
+    uploadedAt?:Date,
+    isDeleted?:boolean,
 };
-interface AttachmentCreationAttributes extends Optional<AttachmentAttributes,'attachment_id'>{}
+interface AttachmentCreationAttributes extends Optional<AttachmentAttributes,'attachmentId'>{}
 module.exports=(sequelize:Sequelize,DataTypes:any)=>{
-    class Attachment extends Model<AttachmentAttributes,AttachmentCreationAttributes> implements AttachmentAttributes{
-        public attachment_id!:number;
-        public drive_id!:number;
-        public file_url!:Text;
+    class Attachments extends Model<AttachmentAttributes,AttachmentCreationAttributes> implements AttachmentAttributes{
+        public attachmentId!:number;
+        public driveId!:number;
+        public fileUrl!:Text;
         public type!: 'PDF' | 'DOCX' | 'IMAGE';
-        public uploaded_at?:Date;
-        public is_deleted?:boolean;
+        public uploadedAt?:Date;
+        public isDeleted?:boolean;
 
         static associate(models:any){
-            Attachment.belongsTo(models.PlacementDrives, {
-                foreignKey: 'drive_id',
-                as: 'placementDrive',
+            Attachments.belongsTo(models.PlacementDrives, {
+                foreignKey: 'driveId',
+                as: 'placementDrives',
                 onDelete: "CASCADE",
                onUpdate: "CASCADE",
             });
         }
     }
-    Attachment.init(
+    Attachments.init(
         {
-            attachment_id: {
+            attachmentId: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            drive_id: {
+            driveId: {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
-            file_url: {
+            fileUrl: {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
@@ -46,23 +46,23 @@ module.exports=(sequelize:Sequelize,DataTypes:any)=>{
                 type: DataTypes.ENUM('PDF', 'DOCX', 'IMAGE'),
                 allowNull: false,
             },
-            uploaded_at: {
+            uploadedAt: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW,
             },
-            is_deleted: {
+            isDeleted: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
             }
         },
         {
             sequelize,
-            modelName: 'Attachment',
+            modelName: 'Attachments',
             tableName: 'Attachments',
             freezeTableName: true,
             timestamps: false,
             underscored: true,
         }
     );
-    return Attachment;
+    return Attachments;
 }
