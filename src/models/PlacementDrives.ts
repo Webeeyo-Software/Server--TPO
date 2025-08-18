@@ -36,15 +36,24 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         static associate(models: any) {
            PlacementDrives.hasMany(models.Application, {
                foreignKey: 'drive_id',
-               as: 'applications'
+               as: 'applications',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+
            })
            PlacementDrives.belongsTo(models.DriveTypes, {
                foreignKey: 'drive_type_id',
-               as: 'drive_type'
+               as: 'drive_type',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+
            });
            PlacementDrives.belongsTo(models.Companies, {
                foreignKey: 'company_id',
-               as: 'company'
+               as: 'company',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+
            });
         }
     }

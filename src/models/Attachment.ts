@@ -21,7 +21,9 @@ module.exports=(sequelize:Sequelize,DataTypes:any)=>{
         static associate(models:any){
             Attachment.belongsTo(models.PlacementDrives, {
                 foreignKey: 'drive_id',
-                as: 'placementDrive'
+                as: 'placementDrive',
+                onDelete: "CASCADE",
+               onUpdate: "CASCADE",
             });
         }
     }

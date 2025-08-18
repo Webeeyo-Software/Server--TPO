@@ -20,7 +20,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         static associate(models: any) {
             OfferLetter.belongsTo(models.Application, {
                 foreignKey: 'application_id',
-                as: 'application'
+                as: 'application',
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
             });
         }
     }
