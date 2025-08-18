@@ -1,64 +1,61 @@
-import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-export interface AcademicDetailsAttributes {
+interface AcademicDetailsAttributes {
   id: string;
-  registration_no: bigint;
-  ssc_percent?: number;
-  ssc_board?: string;
-  ssc_year?: number;
-  hsc_percent?: number;
-  hsc_board?: string;
-  hsc_year?: number;
+  registrationNo: bigint;
+  sscPercent?: number;
+  sscBoard?: string;
+  sscYear?: number;
+  hscPercent?: number;
+  hscBoard?: string;
+  hscYear?: number;
   cgpa?: number;
   backlogs?: number;
-  is_deleted?: boolean;
+  isDeleted?: boolean;
 }
 
-export interface AcademicDetailsCreationAttributes
+interface AcademicDetailsCreationAttributes
   extends Optional<
     AcademicDetailsAttributes,
     | "id"
-    | "ssc_percent"
-    | "ssc_board"
-    | "ssc_year"
-    | "hsc_percent"
-    | "hsc_board"
-    | "hsc_year"
+    | "sscPercent"
+    | "sscBoard"
+    | "sscYear"
+    | "hscPercent"
+    | "hscBoard"
+    | "hscYear"
     | "cgpa"
     | "backlogs"
-    | "is_deleted"
+    | "isDeleted"
   > {}
 
-export class AcademicDetails
-  extends Model<AcademicDetailsAttributes, AcademicDetailsCreationAttributes>
-  implements AcademicDetailsAttributes
-{
-  public id!: string;
-  public registration_no!: bigint;
-  public ssc_percent?: number;
-  public ssc_board?: string;
-  public ssc_year?: number;
-  public hsc_percent?: number;
-  public hsc_board?: string;
-  public hsc_year?: number;
-  public cgpa?: number;
-  public backlogs?: number;
-  public is_deleted?: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class AcademicDetails
+    extends Model<AcademicDetailsAttributes, AcademicDetailsCreationAttributes>
+    implements AcademicDetailsAttributes
+  {
+    public id!: string;
+    public registrationNo!: bigint;
+    public sscPercent?: number;
+    public sscBoard?: string;
+    public sscYear?: number;
+    public hscPercent?: number;
+    public hscBoard?: string;
+    public hscYear?: number;
+    public cgpa?: number;
+    public backlogs?: number;
+    public isDeleted?: boolean;
 
-  static associate(models: any) {
-    if(models.StudentProfile){
-    AcademicDetails.belongsTo(models.StudentProfile, {
-      foreignKey: "registration_no",
-      as: "studentProfile",
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-    });
+    static associate(models: any) {
+      AcademicDetails.belongsTo(models.StudentProfiles, {
+        foreignKey: "registrationNo",
+        as: "studentProfiles",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
+    }
   }
-  }
-}
 
-
-export default function initAcademicDetails(sequelize: Sequelize): typeof AcademicDetails {
   AcademicDetails.init(
     {
       id: {
@@ -66,35 +63,80 @@ export default function initAcademicDetails(sequelize: Sequelize): typeof Academ
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      registration_no: {
+      registrationNo: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        references: {
-          model: "StudentProfiles", // Table name
-          key: "registration_no",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
       },
-      ssc_percent: { type: DataTypes.DECIMAL(5, 2), allowNull: true },
-      ssc_board: { type: DataTypes.STRING(100), allowNull: true },
-      ssc_year: { type: DataTypes.INTEGER, allowNull: true },
-      hsc_percent: { type: DataTypes.DECIMAL(5, 2), allowNull: true },
-      hsc_board: { type: DataTypes.STRING(100), allowNull: true },
-      hsc_year: { type: DataTypes.INTEGER, allowNull: true },
-      cgpa: { type: DataTypes.DECIMAL(5, 2), allowNull: true },
-      backlogs: { type: DataTypes.INTEGER, allowNull: true },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+      sscPercent: {
+        type: DataTypes.DECIMAL(5, 2),
+        allowNull: true,
+        validate: {
+          min: 0,
+          max: 100,
+        },
+      },
+      sscBoard: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+      },
+      sscYear: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          min: 1900,
+          max: new Date().getFullYear(),
+        },
+      },
+      hscPercent: {
+        type: DataTypes.DECIMAL(5, 2),
+        allowNull: true,
+        validate: {
+          min: 0,
+          max: 100,
+        },
+      },
+      hscBoard: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+      },
+      hscYear: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          min: 1900,
+          max: new Date().getFullYear(),
+        },
+      },
+      cgpa: {
+        type: DataTypes.DECIMAL(4, 2),
+        allowNull: true,
+        validate: {
+          min: 0,
+          max: 10,
+        },
+      },
+      backlogs: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          min: 0,
+        },
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
       modelName: "AcademicDetails",
       tableName: "AcademicDetails",
       freezeTableName: true,
-      timestamps: false, // MSSQL compatibility
+      timestamps: false,
       underscored: true,
     }
   );
 
   return AcademicDetails;
-}
+};

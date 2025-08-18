@@ -1,36 +1,36 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface UserRoleAttributes {
-  user_role_id: string;
-  user_id: string;
-  role_id: string;
+  id: string;
+  userId: string;
+  roleId: string;
 }
 
 interface UserRoleCreationAttributes
-  extends Optional<UserRoleAttributes, "user_role_id"> {}
+  extends Optional<UserRoleAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class UserRole
     extends Model<UserRoleAttributes, UserRoleCreationAttributes>
     implements UserRoleAttributes
   {
-    public user_role_id!: string;
-    public user_id!: string;
-    public role_id!: string;
+    public id!: string;
+    public userId!: string;
+    public roleId!: string;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 
     static associate(models: any) {
-        UserRole.belongsTo(models.User, {
-          foreignKey: "user_id",
-          as: "user",
+        UserRole.belongsTo(models.Users, {
+          foreignKey: "userId",
+          as: "users",
           onDelete: "CASCADE",
           onUpdate: "CASCADE",
         });
-        UserRole.belongsTo(models.Role, {
-          foreignKey: "role_id",
-          as: "role",
+        UserRole.belongsTo(models.Roles, {
+          foreignKey: "roleId",
+          as: "roles",
           onDelete: "CASCADE",
           onUpdate: "CASCADE",
         });
@@ -39,16 +39,16 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   UserRole.init(
     {
-      user_role_id: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-      role_id: {
+      roleId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
@@ -56,7 +56,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: "UserRole",
-      tableName: "UserRoles",
+      tableName: "UserRole",
       freezeTableName: true,
       timestamps: false,
       underscored: true,

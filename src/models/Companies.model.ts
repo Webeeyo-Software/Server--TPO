@@ -1,70 +1,65 @@
-import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-export interface CompaniesAttributes {
-  companies_id: string;
+interface CompaniesAttributes {
+  companiesId: string;
   name: string;
-  user_id: string;
+  userId: string;
   description?: string;
   website?: string;
   email?: string;
-  contact_number?: string;
+  contactNumber?: string;
   location?: string;
-  logo_url?: string;
+  logoUrl?: string;
   status?: "Active" | "Inactive";
-  created_at?: Date;
-  is_deleted?: boolean;
+  createdAt?: Date;
+  isDeleted?: boolean;
 }
 
-export type CompaniesCreationAttributes = Optional<
+type CompaniesCreationAttributes = Optional<
   CompaniesAttributes,
-  "companies_id" | "status" | "created_at" | "is_deleted"
+  "companiesId" | "status" | "createdAt" | "isDeleted"
 >;
 
-export class Companies
-  extends Model<CompaniesAttributes, CompaniesCreationAttributes>
-  implements CompaniesAttributes
-{
-  declare companies_id: string;
-  declare name: string;
-  declare user_id: string;
-  declare description?: string;
-  declare website?: string;
-  declare email?: string;
-  declare contact_number?: string;
-  declare location?: string;
-  declare logo_url?: string;
-  declare status: "Active" | "Inactive";
-  declare created_at: Date;
-  declare is_deleted: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class Companies
+    extends Model<CompaniesAttributes, CompaniesCreationAttributes>
+    implements CompaniesAttributes
+  {
+    public companiesId!: string;
+    public name!: string;
+    public userId!: string;
+    public description?: string;
+    public website?: string;
+    public email?: string;
+    public contactNumber?: string;
+    public location?: string;
+    public logoUrl?: string;
+    public status!: "Active" | "Inactive";
+    public createdAt!: Date;
+    public isDeleted!: boolean;
 
-  declare placementDrives?: any[];
+    public placementDrives?: any[];
 
-  static associate(models: any) {
-    if(models.User){
-    this.belongsTo(models.User, {
-      foreignKey: "user_id",
-      as: "user",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
-  }
+    static associate(models: any) {
+      Companies.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
 
-    if(models.PlacementDrives){
-    this.hasMany(models.PlacementDrives, {
-      foreignKey: "companies_id",
-      as: "placementDrives",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
+      Companies.hasMany(models.PlacementDrives, {
+        foreignKey: "companiesId",
+        as: "placementDrives",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
-}
 
-
-export default function initCompanies(sequelize: Sequelize): typeof Companies {
   Companies.init(
     {
-      companies_id: {
+      companiesId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -76,23 +71,22 @@ export default function initCompanies(sequelize: Sequelize): typeof Companies {
         unique: true,
         validate: { notEmpty: true },
       },
-      user_id: {
+      userId: {
         type: DataTypes.UUID,
         allowNull: false,
-        references: { model: "Users", key: "id" },
       },
       description: { type: DataTypes.TEXT },
       website: { type: DataTypes.STRING(150) },
       email: { type: DataTypes.STRING(150) },
-      contact_number: { type: DataTypes.STRING(15) },
+      contactNumber: { type: DataTypes.STRING(15) },
       location: { type: DataTypes.STRING(100) },
-      logo_url: { type: DataTypes.TEXT },
+      logoUrl: { type: DataTypes.TEXT },
       status: {
         type: DataTypes.ENUM("Active", "Inactive"),
         defaultValue: "Active",
       },
-      created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+      createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
     {
       sequelize,
@@ -105,4 +99,4 @@ export default function initCompanies(sequelize: Sequelize): typeof Companies {
   );
 
   return Companies;
-}
+};

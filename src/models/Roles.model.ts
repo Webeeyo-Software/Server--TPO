@@ -1,24 +1,24 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface RoleAttributes {
-  role_id: string; 
-  role_name: string;
+interface RolesAttributes {
+  roleId: string; 
+  roleName: string;
 }
 
-interface RoleCreationAttributes
-  extends Optional<RoleAttributes, "role_id"> {}
+interface RolesCreationAttributes
+  extends Optional<RolesAttributes, "roleId"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Role
-    extends Model<RoleAttributes, RoleCreationAttributes>
-    implements RoleAttributes
+  class Roles
+    extends Model<RolesAttributes, RolesCreationAttributes>
+    implements RolesAttributes
   {
-    public role_id!: string;
-    public role_name!: string;
+    public roleId!: string;
+    public roleName!: string;
 
     static associate(models: any) {
-        Role.hasOne(models.UserRole, {
-          foreignKey: "role_id",
+        Roles.hasOne(models.UserRole, {
+          foreignKey: "roleId",
           as: "userRole",
           onDelete: "CASCADE",
           onUpdate: "CASCADE",
@@ -26,14 +26,14 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     }
   }
 
-  Role.init(
+  Roles.init(
     {
-      role_id: {
+      roleId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      role_name: {
+      roleName: {
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
@@ -44,12 +44,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: "Role",
+      modelName: "Roles",
       tableName: "roles", 
       freezeTableName: true, 
       timestamps: false, 
     }
   );
 
-  return Role;
+  return Roles;
 };
