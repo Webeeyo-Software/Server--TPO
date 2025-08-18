@@ -1,18 +1,18 @@
 import {Sequelize,Model,DataTypes, Optional} from 'sequelize';
 interface ApplicationQuestionAttributes{
-    questionId: number;
-    applicationId: number;
+    id: string;
+    applicationId: string;
     question: Text;
     answer: Text;
     isDeleted?: boolean;
 }
 
-interface ApplicationQuestionCreationAttributes extends Optional<ApplicationQuestionAttributes, 'questionId'> {}
+interface ApplicationQuestionCreationAttributes extends Optional<ApplicationQuestionAttributes, 'id'> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class ApplicationQuestions extends Model<ApplicationQuestionAttributes, ApplicationQuestionCreationAttributes> implements ApplicationQuestionAttributes {
-        public questionId!: number;
-        public applicationId!: number;
+        public id!: string;
+        public applicationId!: string;
         public question!: Text;
         public answer!: Text;
         public isDeleted?: boolean;
@@ -28,7 +28,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         }
     ApplicationQuestions.init(
         {
-            questionId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true
@@ -52,8 +52,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         },
         {
             sequelize,
-            tableName: 'applicationQuestions',
-            modelName: 'ApplicationQuestion',
+            tableName: 'ApplicationQuestions',
+            modelName: 'ApplicationQuestions',
             freezeTableName: true,
             timestamps: false,
             underscored: true,

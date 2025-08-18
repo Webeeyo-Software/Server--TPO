@@ -1,20 +1,20 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface ApplicationAttributes {
-    applicationId: number;
-    userId: number;
-    driveId: number;
+    id: string;
+    userId:string;
+    driveId: string;
     documentUrl: string;
     statusId: string;
     appliedAt?: Date;
     updatedAt?: Date;
 }
 
-interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 'applicationId'> {}
+interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 'id'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class Applications extends Model<ApplicationAttributes, ApplicationCreationAttributes> implements ApplicationAttributes {
-        public applicationId!: number;
-        public userId!: number;
-        public driveId!: number;
+        public id!: string;
+        public userId!: string;
+        public driveId!: string;
         public documentUrl!: string;
         public statusId!: string;
         public readonly createdAt?: Date;
@@ -39,12 +39,24 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             });
+            Applications.hasMany(models.OfferLetters, {
+                foreignKey: 'applicationId',
+                as: 'OfferLetters',
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
+            });
+            Applications.belongsTo(models.ApplicationStatuses, {
+                foreignKey: 'statusId',
+                as: 'status',
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
+            });
         }
     }
 
     Applications.init(
         {
-            applicationId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,

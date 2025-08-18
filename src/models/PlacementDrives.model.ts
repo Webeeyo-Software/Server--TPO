@@ -1,33 +1,33 @@
 import { Sequelize,DataTypes, Optional,Model } from "sequelize";
 interface PlacementDrivesAttributes  {
-    driveId: number,
-    companyId: number,
+    id: string,
+    companyId: string,
     position: string,
     driveDate: Date,
-    postedBy: number,
+    postedBy: string,
     location: string,
     eligibilityCriteria: Text,
     jobDescription: Text,
     ctc: number,
-    driveTypeId: number,
+    driveTypeId: string,
     applicationDeadline: Date,
     isDeleted?: boolean | 'false',
     createdAt?: Date,
 };
 
-interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'driveId'> {}
+interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'id'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class PlacementDrives extends Model<PlacementDrivesAttributes, PlacementDrivesCreationAttributes> implements PlacementDrivesAttributes {
-        public driveId!: number;
-        public companyId!: number;
+        public id!: string;
+        public companyId!: string;
         public position!: string;
         public driveDate!: Date;
-        public postedBy!: number;
+        public postedBy!: string;
         public location!: string;
         public eligibilityCriteria!: Text;
         public jobDescription!: Text;
         public ctc!: number;
-        public driveTypeId!: number;
+        public driveTypeId!: string;
         public applicationDeadline!: Date;
         public isDeleted!: boolean | 'false';
 
@@ -55,19 +55,30 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                onUpdate: "CASCADE",
 
            });
-        }
+           PlacementDrives.belongsTo(models.Users, {
+               foreignKey: 'postedBy',
+               as: 'postedByUser',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+           });
+           PlacementDrives.hasMany(models.Attachments, {
+               foreignKey: 'driveId',
+               as: 'attachments',
+               onDelete: "CASCADE",
+               onUpdate: "CASCADE",
+           });
+       }
     }
 
     PlacementDrives.init(
         {
-            driveId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
             companyId: {
                 type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
             },
             position: {
@@ -79,7 +90,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 allowNull: false,
             },
             postedBy: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
             },
             location: {
