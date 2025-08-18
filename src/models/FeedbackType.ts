@@ -22,7 +22,7 @@ module.exports = (sequelize: Sequelize) => {
 
     static associate(models: any) {
   FeedbackTypes.hasMany(models.Feedback, {
-     foreignKey: "feedback_type_id", 
+     foreignKey: "feedbackTypeId", 
      as: "id",   
      onDelete: "CASCADE",
      onUpdate: "CASCADE",     
