@@ -1,19 +1,19 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface BloodGroupsAttributes {
-  bgId: string;
+  id: string;
   bloodGroup: string;
 }
 
 interface BloodGroupsCreationAttributes
-  extends Optional<BloodGroupsAttributes, "bgId"> {}
+  extends Optional<BloodGroupsAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class BloodGroups
     extends Model<BloodGroupsAttributes, BloodGroupsCreationAttributes>
     implements BloodGroupsAttributes
   {
-    public bgId!: string;
+    public id!: string;
     public bloodGroup!: string;
 
     static associate(models: any) {
@@ -28,7 +28,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   BloodGroups.init(
     {
-      bgId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,

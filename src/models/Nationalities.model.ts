@@ -1,19 +1,19 @@
 import { Model, Sequelize, Optional } from "sequelize";
 
 interface NationalitiesAttributes {
-  nationalityId: string;
+  id: string;
   nationalityName: string;
 }
 
 interface NationalitiesCreationAttributes
-  extends Optional<NationalitiesAttributes, "nationalityId"> {}
+  extends Optional<NationalitiesAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class Nationalities
     extends Model<NationalitiesAttributes, NationalitiesCreationAttributes>
     implements NationalitiesAttributes
   {
-    public nationalityId!: string;
+    public id!: string;
     public nationalityName!: string;
 
     static associate(models: any) {
@@ -28,7 +28,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   Nationalities.init(
     {
-      nationalityId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,

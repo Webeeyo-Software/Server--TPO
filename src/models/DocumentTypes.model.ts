@@ -1,19 +1,19 @@
 import { Model, Sequelize, Optional } from "sequelize";
 
 interface DocumentTypesAttributes {
-  typeId: string;
+  id: string;
   typeName: string;
 }
 
 interface DocumentTypesCreationAttributes
-  extends Optional<DocumentTypesAttributes, "typeId"> {}
+  extends Optional<DocumentTypesAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class DocumentTypes
     extends Model<DocumentTypesAttributes, DocumentTypesCreationAttributes>
     implements DocumentTypesAttributes
   {
-    public typeId!: string;
+    public id!: string;
     public typeName!: string;
 
     static associate(models: any) {
@@ -28,7 +28,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
   DocumentTypes.init(
     {
-      typeId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
