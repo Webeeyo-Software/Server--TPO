@@ -1,41 +1,84 @@
-import { Model, DataTypes, Optional, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface TPORegistrationAttributes {
+interface TPORegistrationsAttributes {
   id: string;
-  user_id: string;
-  verified_by?: string;
-  verified_at?: Date;
-  status?: 'Pending' | 'Verified' | 'Rejected';
-  is_deleted?: boolean;
+  userId: string;
+  verifiedBy?: string;
+  verifiedAt?: Date;
+  status?: "Pending" | "Verified" | "Rejected";
+  isDeleted?: boolean;
 }
 
-type TPORegistrationCreationAttributes = Optional<TPORegistrationAttributes, 'id' | 'verified_by' | 'verified_at' | 'status' | 'is_deleted'>;
+interface TPORegistrationsCreationAttributes
+  extends Optional<
+    TPORegistrationsAttributes,
+    "id" | "verifiedBy" | "verifiedAt" | "status" | "isDeleted"
+  > {}
 
-export class TPORegistration extends Model<TPORegistrationAttributes, TPORegistrationCreationAttributes> implements TPORegistrationAttributes {
-  public id!: string;
-  public user_id!: string;
-  public verified_by?: string;
-  public verified_at?: Date;
-  public status?: 'Pending' | 'Verified' | 'Rejected';
-  public is_deleted?: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class TPORegistrations
+    extends Model<
+      TPORegistrationsAttributes,
+      TPORegistrationsCreationAttributes
+    >
+    implements TPORegistrationsAttributes
+  {
+    public id!: string;
+    public userId!: string;
+    public verifiedBy?: string;
+    public verifiedAt?: Date;
+    public status?: "Pending" | "Verified" | "Rejected";
+    public isDeleted?: boolean;
 
-  static associate(models: any) {
-    TPORegistration.belongsTo(models.Users, { foreignKey: 'user_id', as: 'user' });
-    TPORegistration.belongsTo(models.Users, { foreignKey: 'verified_by', as: 'verifier' });
+    static associate(models: any) {
+      TPORegistrations.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "user",
+      });
+      TPORegistrations.belongsTo(models.Users, {
+        foreignKey: "verifiedBy",
+        as: "verifier",
+      });
+    }
   }
-}
 
-export const TPORegistrationFactory = (sequelize: Sequelize) => {
-  TPORegistration.init(
+  TPORegistrations.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-      user_id: { type: DataTypes.UUID, allowNull: false },
-      verified_by: { type: DataTypes.UUID, allowNull: true },
-      verified_at: { type: DataTypes.DATE, allowNull: true },
-      status: { type: DataTypes.ENUM('Pending', 'Verified', 'Rejected'), defaultValue: 'Pending' },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false }
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      verifiedBy: {
+        type: DataTypes.UUID,
+        allowNull: true,
+      },
+      verifiedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      status: {
+        type: DataTypes.ENUM("Pending", "Verified", "Rejected"),
+        defaultValue: "Pending",
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
-    { tableName: 'TPORegistrations', sequelize, timestamps: false }
+    {
+      sequelize,
+      modelName: "TPORegistrations",
+      tableName: "TPORegistrations",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
-  return TPORegistration;
+
+  return TPORegistrations;
 };

@@ -1,37 +1,76 @@
-import { Model, DataTypes, Optional, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface NoticeReadAttributes {
+interface NoticeReadsAttributes {
   id: string;
-  notice_id: string;
-  user_id: string;
-  read_at?: Date;
-  is_deleted?: boolean;
+  noticeId: string;
+  userId: string;
+  readAt?: Date;
+  isDeleted?: boolean;
 }
 
-type NoticeReadCreationAttributes = Optional<NoticeReadAttributes, 'id' | 'read_at' | 'is_deleted'>;
+interface NoticeReadsCreationAttributes
+  extends Optional<NoticeReadsAttributes, "id" | "readAt" | "isDeleted"> {}
 
-export class NoticeRead extends Model<NoticeReadAttributes, NoticeReadCreationAttributes> implements NoticeReadAttributes {
-  public id!: string;
-  public notice_id!: string;
-  public user_id!: string;
-  public read_at?: Date;
-  public is_deleted?: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class NoticeReads
+    extends Model<NoticeReadsAttributes, NoticeReadsCreationAttributes>
+    implements NoticeReadsAttributes
+  {
+    public id!: string;
+    public noticeId!: string;
+    public userId!: string;
+    public readAt?: Date;
+    public isDeleted?: boolean;
 
-  static associate(models: any) {
-    NoticeRead.belongsTo(models.Notice, { foreignKey: 'notice_id', as: 'notice' });
+    static associate(models: any) {
+      NoticeReads.belongsTo(models.Notices, {
+        foreignKey: "noticeId",
+        as: "notices",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      NoticeReads.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+    }
   }
-}
 
-export const NoticeReadFactory = (sequelize: Sequelize) => {
-  NoticeRead.init(
+  NoticeReads.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-      notice_id: { type: DataTypes.UUID, allowNull: false },
-      user_id: { type: DataTypes.UUID, allowNull: false },
-      read_at: { type: DataTypes.DATE, allowNull: true },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false }
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      noticeId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      readAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
-    { tableName: 'NoticeReads', sequelize, timestamps: false }
+    {
+      sequelize,
+      modelName: "NoticeReads",
+      tableName: "NoticeReads",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
-  return NoticeRead;
+
+  return NoticeReads;
 };

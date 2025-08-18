@@ -1,40 +1,84 @@
-import { Model, DataTypes, Optional, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
-interface NotificationAttributes {
+interface NotificationsAttributes {
   id: string;
-  user_id: string;
+  userId: string;
   message: string;
-  is_read?: boolean;
-  created_at?: Date;
-  is_deleted?: boolean;
+  isRead?: boolean;
+  createdAt?: Date;
+  isDeleted?: boolean;
 }
 
-type NotificationCreationAttributes = Optional<NotificationAttributes, 'id' | 'is_read' | 'created_at' | 'is_deleted'>;
+interface NotificationsCreationAttributes
+  extends Optional<
+    NotificationsAttributes,
+    "id" | "isRead" | "createdAt" | "isDeleted"
+  > {}
 
-export class Notification extends Model<NotificationAttributes, NotificationCreationAttributes> implements NotificationAttributes {
-  public id!: string;
-  public user_id!: string;
-  public message!: string;
-  public is_read?: boolean;
-  public created_at?: Date;
-  public is_deleted?: boolean;
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class Notifications
+    extends Model<NotificationsAttributes, NotificationsCreationAttributes>
+    implements NotificationsAttributes
+  {
+    public id!: string;
+    public userId!: string;
+    public message!: string;
+    public isRead?: boolean;
+    public createdAt?: Date;
+    public isDeleted?: boolean;
 
-  static associate(models: any) {
-    Notification.belongsTo(models.Users, { foreignKey: 'user_id', as: 'user' });
+    static associate(models: any) {
+      Notifications.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });      Notifications.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+    }
   }
-}
 
-export const NotificationFactory = (sequelize: Sequelize) => {
-  Notification.init(
+  Notifications.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-      user_id: { type: DataTypes.UUID, allowNull: false },
-      message: { type: DataTypes.TEXT, allowNull: false },
-      is_read: { type: DataTypes.BOOLEAN, defaultValue: false },
-      created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false }
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      message: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      isRead: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
-    { tableName: 'Notifications', sequelize, timestamps: false }
+    {
+      sequelize,
+      modelName: "Notifications",
+      tableName: "Notifications",
+      freezeTableName: true,
+      timestamps: false,
+      underscored: true,
+    }
   );
-  return Notification;
+
+  return Notifications;
 };
