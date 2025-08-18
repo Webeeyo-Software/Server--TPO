@@ -1,16 +1,16 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface OfferLetterAttributes {
-    offerLetterId: string;
+    id: string;
     applicationId: string;
     fileUrl: Text;
     type: 'PDF' | 'DOCX' | 'IMAGE';
     issuedAt?: Date;
     isDeleted?: boolean;
 }
-interface OfferLetterCreationAttributes extends Optional<OfferLetterAttributes, 'offerLetterId'> {}
+interface OfferLetterCreationAttributes extends Optional<OfferLetterAttributes, 'id'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class OfferLetters extends Model<OfferLetterAttributes, OfferLetterCreationAttributes> implements OfferLetterAttributes {
-        public offerLetterId!: string;
+        public id!: string;
         public applicationId!: string;
         public fileUrl!: Text;
         public type!: 'PDF' | 'DOCX' | 'IMAGE';
@@ -28,7 +28,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     }
     OfferLetters.init(
         {
-          offerLetterId:{
+          id:{
             type:DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey:true,             

@@ -1,6 +1,6 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface ApplicationAttributes {
-    applicationId: string;
+    id: string;
     userId:string;
     driveId: string;
     documentUrl: string;
@@ -9,10 +9,10 @@ interface ApplicationAttributes {
     updatedAt?: Date;
 }
 
-interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 'applicationId'> {}
+interface ApplicationCreationAttributes extends Optional<ApplicationAttributes, 'id'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class Applications extends Model<ApplicationAttributes, ApplicationCreationAttributes> implements ApplicationAttributes {
-        public applicationId!: string;
+        public id!: string;
         public userId!: string;
         public driveId!: string;
         public documentUrl!: string;
@@ -51,7 +51,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
     Applications.init(
         {
-            applicationId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,

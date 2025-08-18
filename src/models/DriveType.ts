@@ -1,13 +1,13 @@
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize';
 interface DriveTypeAttributes {
-    driveTypeId:string;
+    id:string;
     driveTypeName:string;
 
 }
-interface DriveCreationAttributes extends Optional<DriveTypeAttributes,'driveTypeId'>{}
+interface DriveCreationAttributes extends Optional<DriveTypeAttributes,'id'>{}
 module.exports=(sequelize:Sequelize, DataTypes:any)=>{
     class DriveTypes extends Model<DriveTypeAttributes, DriveCreationAttributes> implements DriveTypeAttributes {
-       public driveTypeId!: string;
+       public id!: string;
        public driveTypeName!: string;
        public readonly createdAt!: Date;
        public readonly updatedAt!: Date;
@@ -26,7 +26,7 @@ module.exports=(sequelize:Sequelize, DataTypes:any)=>{
         }
      DriveTypes.init(
         {
-            driveTypeId:{
+            id:{
                 type:DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey:true,

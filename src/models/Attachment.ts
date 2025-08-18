@@ -1,17 +1,17 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 import { sequelize } from '.';
 interface AttachmentAttributes {
-    attachmentId:string,
+    id:string,
     driveId:string,
     fileUrl:Text,
     type:'PDF'|'DOCX'|'IMAGE',
     uploadedAt?:Date,
     isDeleted?:boolean,
 };
-interface AttachmentCreationAttributes extends Optional<AttachmentAttributes,'attachmentId'>{}
+interface AttachmentCreationAttributes extends Optional<AttachmentAttributes,'id'>{}
 module.exports=(sequelize:Sequelize,DataTypes:any)=>{
     class Attachments extends Model<AttachmentAttributes,AttachmentCreationAttributes> implements AttachmentAttributes{
-        public attachmentId!:string;
+        public id!:string;
         public driveId!:string;
         public fileUrl!:Text;
         public type!: 'PDF' | 'DOCX' | 'IMAGE';
@@ -29,7 +29,7 @@ module.exports=(sequelize:Sequelize,DataTypes:any)=>{
     }
     Attachments.init(
         {
-            attachmentId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,

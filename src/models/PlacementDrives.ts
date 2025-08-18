@@ -1,6 +1,6 @@
 import { Sequelize,DataTypes, Optional,Model } from "sequelize";
 interface PlacementDrivesAttributes  {
-    driveId: string,
+    id: string,
     companyId: string,
     position: string,
     driveDate: Date,
@@ -15,10 +15,10 @@ interface PlacementDrivesAttributes  {
     createdAt?: Date,
 };
 
-interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'driveId'> {}
+interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'id'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class PlacementDrives extends Model<PlacementDrivesAttributes, PlacementDrivesCreationAttributes> implements PlacementDrivesAttributes {
-        public driveId!: string;
+        public id!: string;
         public companyId!: string;
         public position!: string;
         public driveDate!: Date;
@@ -60,7 +60,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
     PlacementDrives.init(
         {
-            driveId: {
+            id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
