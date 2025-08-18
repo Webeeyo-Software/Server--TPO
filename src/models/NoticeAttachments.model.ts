@@ -30,7 +30,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
     static associate(models: any) {
       NoticeAttachments.belongsTo(models.Notices, {
-        foreignKey: "notice_id",
+        foreignKey: "noticeId",
         as: "notices",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",

@@ -33,12 +33,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         as: "users",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-      });      Notifications.belongsTo(models.Users, {
-        foreignKey: "userId",
-        as: "users",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
-      });
+      });     
     }
   }
 
