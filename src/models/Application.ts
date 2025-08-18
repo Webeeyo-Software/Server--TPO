@@ -39,6 +39,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
                 onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             });
+            Applications.hasMany(models.OfferLetters, {
+                foreignKey: 'applicationId',
+                as: 'OfferLetters',
+                onDelete: "CASCADE",
+                onUpdate: "CASCADE",
+            });
+            
         }
     }
 
