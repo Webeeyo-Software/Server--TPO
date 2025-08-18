@@ -1,10 +1,10 @@
 import { Sequelize,DataTypes, Optional,Model } from "sequelize";
 interface PlacementDrivesAttributes  {
-    driveId: number,
-    companyId: number,
+    driveId: string,
+    companyId: string,
     position: string,
     driveDate: Date,
-    postedBy: number,
+    postedBy: string,
     location: string,
     eligibilityCriteria: Text,
     jobDescription: Text,
@@ -18,11 +18,11 @@ interface PlacementDrivesAttributes  {
 interface PlacementDrivesCreationAttributes extends Optional<PlacementDrivesAttributes, 'driveId'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class PlacementDrives extends Model<PlacementDrivesAttributes, PlacementDrivesCreationAttributes> implements PlacementDrivesAttributes {
-        public driveId!: number;
-        public companyId!: number;
+        public driveId!: string;
+        public companyId!: string;
         public position!: string;
         public driveDate!: Date;
-        public postedBy!: number;
+        public postedBy!: string;
         public location!: string;
         public eligibilityCriteria!: Text;
         public jobDescription!: Text;

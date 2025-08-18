@@ -1,7 +1,7 @@
 import {Sequelize,Optional,Model,DataTypes} from 'sequelize';
 interface OfferLetterAttributes {
-    offerLetterId: number;
-    applicationId: number;
+    offerLetterId: string;
+    applicationId: string;
     fileUrl: Text;
     type: 'PDF' | 'DOCX' | 'IMAGE';
     issuedAt?: Date;
@@ -10,8 +10,8 @@ interface OfferLetterAttributes {
 interface OfferLetterCreationAttributes extends Optional<OfferLetterAttributes, 'offerLetterId'> {}
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
     class OfferLetters extends Model<OfferLetterAttributes, OfferLetterCreationAttributes> implements OfferLetterAttributes {
-        public offerLetterId!: number;
-        public applicationId!: number;
+        public offerLetterId!: string;
+        public applicationId!: string;
         public fileUrl!: Text;
         public type!: 'PDF' | 'DOCX' | 'IMAGE';
         public issuedAt?: Date;
