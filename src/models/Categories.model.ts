@@ -12,8 +12,7 @@ interface CategoryCreationAttributes
   extends Optional<CategoryAttributes, "id" | "isDeleted" | "createdAt"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Categories
-    extends Model<CategoryAttributes, CategoryCreationAttributes>
+  class Categories extends Model<CategoryAttributes, CategoryCreationAttributes>
     implements CategoryAttributes
   {
     public id!: string;
@@ -30,7 +29,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       });
     }
   }
-
   Categories.init(
     {
         id: {

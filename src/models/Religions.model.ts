@@ -26,12 +26,11 @@ module.exports = (sequelize: Sequelize) => {
 });
     }
   }
-
   Religions.init(
     {
       id: {
         type: DataTypes.UUID,
-       defaultValue: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
       religionName: {
