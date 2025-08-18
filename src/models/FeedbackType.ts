@@ -24,7 +24,9 @@ module.exports = (sequelize: Sequelize) => {
     static associate(models: any) {
   FeedbackType.hasMany(models.Feedback, {
      foreignKey: "feedback_type_id", 
-     as: "id"        
+     as: "id",   
+     onDelete: "CASCADE",
+        onUpdate: "CASCADE",     
 });
     }
   }
@@ -32,8 +34,8 @@ module.exports = (sequelize: Sequelize) => {
   FeedbackType.init(
     {
       feedback_type_id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
       type_name: {
@@ -59,6 +61,8 @@ module.exports = (sequelize: Sequelize) => {
       modelName: "FeedbackType",
       tableName: "FeedbackTypes",
       timestamps: false,
+      freezeTableName: true,
+      underscored: true,
     }
   );
 

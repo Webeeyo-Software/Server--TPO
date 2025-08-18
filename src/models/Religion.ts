@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Optional, Model } from "sequelize";
 
 type ReligionAttributes = {
-  religion_id: number;
+  religion_id: string;
   religion_name: string;
   is_deleted?: boolean | false;
   created_at?: Date;
@@ -12,15 +12,17 @@ interface ReligionCreationAttributes extends Optional<ReligionAttributes, "relig
 module.exports = (sequelize: Sequelize) => {
   class Religion extends Model<ReligionAttributes, ReligionCreationAttributes>
     implements ReligionAttributes {
-    public religion_id!: number;
+    public religion_id!: string;
     public religion_name!: string;
     public is_deleted!: boolean | false;
     public readonly created_at?: Date;
 
     static associate(models: any) {
-  Religion.hasMany(models.StudentProfiles, {
+  Religion.hasOne(models.StudentProfiles, {
      foreignKey: "religion_id", 
-     as: "user_id"            // alias for association
+      as: "studentProfiles",   
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",            
 });
     }
   }
@@ -28,8 +30,8 @@ module.exports = (sequelize: Sequelize) => {
   Religion.init(
     {
       religion_id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+       defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
       religion_name: {
@@ -51,6 +53,9 @@ module.exports = (sequelize: Sequelize) => {
       modelName: "Religion",
       tableName: "Religions",
       timestamps: false,
+      freezeTableName: true,
+      underscored: true,
+
     }
   );
 
