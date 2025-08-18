@@ -7,7 +7,6 @@ type FeedbackTypeAttributes = {
   isdeleted?: boolean | false;
   createdat?: Date;
 };
-
 interface FeedbackTypeCreationAttributes
   extends Optional<FeedbackTypeAttributes, "feedbackTypeId"> {}
 

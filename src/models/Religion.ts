@@ -14,7 +14,7 @@ module.exports = (sequelize: Sequelize) => {
     implements ReligionAttributes {
     public religionId!: string;
     public religionName!: string;
-    public is_deleted!: boolean | false;
+    public isdeleted!: boolean | false;
     public readonly created_at?: Date;
 
     static associate(models: any) {
