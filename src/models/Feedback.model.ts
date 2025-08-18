@@ -29,9 +29,9 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      Feedback.belongsTo(models.Users, { foreignKey: "submittedBy", as: "submittedBy" });
-      Feedback.belongsTo(models.Users, { foreignKey: "submittedFor", as: "submittedFor" });
-      Feedback.belongsTo(models.FeedbackTypes, { foreignKey: "feedbackTypeId", as: "feedbackType" });
+      Feedback.belongsTo(models.Users, { foreignKey: "submittedBy", as: "submittedBy", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      Feedback.belongsTo(models.Users, { foreignKey: "submittedFor", as: "submittedFor", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      Feedback.belongsTo(models.FeedbackTypes, { foreignKey: "feedbackTypeId", as: "feedbackType", onUpdate: "CASCADE", onDelete: "CASCADE" });
     }
   }
 

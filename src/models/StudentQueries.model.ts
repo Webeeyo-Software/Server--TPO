@@ -25,8 +25,8 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      StudentQueries.belongsTo(models.Users, { foreignKey: "userId", as: "user" });
-      StudentQueries.hasMany(models.QueryResponses, { foreignKey: "queryId", as: "responses" });
+      StudentQueries.belongsTo(models.Users, { foreignKey: "userId", as: "user", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      StudentQueries.hasMany(models.QueryResponses, { foreignKey: "queryId", as: "responses", onUpdate: "CASCADE", onDelete: "CASCADE" });
     }
   }
 
