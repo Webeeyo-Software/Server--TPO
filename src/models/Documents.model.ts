@@ -25,8 +25,8 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      Documents.belongsTo(models.Users, { foreignKey: "userId", as: "user" });
-      Documents.belongsTo(models.DocumentTypes, { foreignKey: "typeId", as: "documentType" });
+      Documents.belongsTo(models.Users, { foreignKey: "userId", as: "user", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      Documents.belongsTo(models.DocumentTypes, { foreignKey: "typeId", as: "documentType", onUpdate: "CASCADE", onDelete: "CASCADE" });
     }
   }
 

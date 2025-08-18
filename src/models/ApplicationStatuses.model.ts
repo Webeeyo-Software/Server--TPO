@@ -1,32 +1,34 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface ApplicationStatusesAttributes {
-  statusId: string;
+  id: string;
   statusName: string;
 }
 
 interface ApplicationStatusesCreationAttributes
-  extends Optional<ApplicationStatusesAttributes, "statusId"> {}
+  extends Optional<ApplicationStatusesAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize) => {
   class ApplicationStatuses
     extends Model<ApplicationStatusesAttributes, ApplicationStatusesCreationAttributes>
     implements ApplicationStatusesAttributes
   {
-    public statusId!: string;
+    public id!: string;
     public statusName!: string;
 
     static associate(models: any) {
       ApplicationStatuses.hasMany(models.Applications, {
-        foreignKey: "statusId",
+        foreignKey: "id",
         as: "applications",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       });
     }
   }
 
   ApplicationStatuses.init(
     {
-      statusId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,

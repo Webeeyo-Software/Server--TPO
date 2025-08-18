@@ -25,8 +25,8 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      QueryResponses.belongsTo(models.StudentQueries, { foreignKey: "queryId", as: "query" });
-      QueryResponses.belongsTo(models.Users, { foreignKey: "responderId", as: "responder" });
+      QueryResponses.belongsTo(models.StudentQueries, { foreignKey: "queryId", as: "query", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      QueryResponses.belongsTo(models.Users, { foreignKey: "responderId", as: "responder", onUpdate: "CASCADE", onDelete: "CASCADE" });
     }
   }
 
