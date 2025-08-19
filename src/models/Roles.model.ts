@@ -1,12 +1,11 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface RolesAttributes {
-  id: string; 
+  id: string;
   roleName: string;
 }
 
-interface RolesCreationAttributes
-  extends Optional<RolesAttributes, "id"> {}
+interface RolesCreationAttributes extends Optional<RolesAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class Roles
@@ -17,12 +16,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public roleName!: string;
 
     static associate(models: any) {
-        Roles.hasOne(models.UserRole, {
-          foreignKey: "roleId",
-          as: "userRole",
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE",
-        });
+      Roles.hasOne(models.UserRole, {
+        foreignKey: "roleId",
+        as: "userRole",
+      });
     }
   }
 
@@ -45,9 +42,9 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     {
       sequelize,
       modelName: "Roles",
-      tableName: "roles", 
-      freezeTableName: true, 
-      timestamps: false, 
+      tableName: "roles",
+      freezeTableName: true,
+      timestamps: false,
     }
   );
 

@@ -20,8 +20,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       DocumentTypes.hasMany(models.Documents, {
         foreignKey: "typeId",
         as: "documents",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
     }
   }

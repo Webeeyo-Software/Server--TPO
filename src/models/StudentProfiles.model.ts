@@ -70,54 +70,52 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-        StudentProfiles.belongsTo(models.Users, {
-          foreignKey: "userId",
-          as: "users",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "users",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
 
-        StudentProfiles.belongsTo(models.Departments, {
-          foreignKey: "deptId",
-          as: "departments",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.belongsTo(models.Departments, {
+        foreignKey: "deptId",
+        as: "departments",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
 
-        StudentProfiles.belongsTo(models.BloodGroups, {
-          foreignKey: "bgId",
-          as: "bloodGroups",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.belongsTo(models.BloodGroups, {
+        foreignKey: "bgId",
+        as: "bloodGroups",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
 
-        StudentProfiles.belongsTo(models.Nationalities, {
-          foreignKey: "nationalityId",
-          as: "nationalities",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.belongsTo(models.Nationalities, {
+        foreignKey: "nationalityId",
+        as: "nationalities",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
 
-        StudentProfiles.belongsTo(models.Religions, {
-          foreignKey: "religionId",
-          as: "religions",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.belongsTo(models.Religions, {
+        foreignKey: "religionId",
+        as: "religions",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
 
-        StudentProfiles.belongsTo(models.Categories, {
-          foreignKey: "categoryId",
-          as: "categories",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.belongsTo(models.Categories, {
+        foreignKey: "categoryId",
+        as: "categories",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
 
-        StudentProfiles.hasOne(models.AcademicDetails, {
-          foreignKey: "registrationNo",
-          as: "academicDetails",
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
-        });
+      StudentProfiles.hasOne(models.AcademicDetails, {
+        foreignKey: "registrationNo",
+        as: "academicDetails",
+      });
     }
   }
 

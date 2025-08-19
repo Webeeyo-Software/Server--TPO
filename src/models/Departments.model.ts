@@ -20,8 +20,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Departments.hasMany(models.StudentProfiles, {
         foreignKey: "deptId",
         as: "students",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
     }
   }

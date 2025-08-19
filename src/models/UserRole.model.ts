@@ -22,18 +22,18 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public readonly updatedAt!: Date;
 
     static associate(models: any) {
-        UserRole.belongsTo(models.Users, {
-          foreignKey: "userId",
-          as: "users",
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE",
-        });
-        UserRole.belongsTo(models.Roles, {
-          foreignKey: "roleId",
-          as: "roles",
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE",
-        });
+      UserRole.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      UserRole.belongsTo(models.Roles, {
+        foreignKey: "roleId",
+        as: "roles",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
 

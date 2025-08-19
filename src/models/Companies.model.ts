@@ -51,8 +51,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Companies.hasMany(models.PlacementDrives, {
         foreignKey: "companiesId",
         as: "placementDrives",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
     }
   }

@@ -11,12 +11,16 @@ interface NoticesAttributes {
 }
 
 interface NoticesCreationAttributes
-  extends Optional<NoticesAttributes, "id" | "createdAt" | "pdfUrl" | "isDeleted"> { }
+  extends Optional<
+    NoticesAttributes,
+    "id" | "createdAt" | "pdfUrl" | "isDeleted"
+  > {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class Notices
     extends Model<NoticesAttributes, NoticesCreationAttributes>
-    implements NoticesAttributes {
+    implements NoticesAttributes
+  {
     public id!: string;
     public title!: string;
     public description!: string;
@@ -26,16 +30,18 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-        Notices.belongsTo(models.Users, {
-        foreignKey: "userId",
+      Notices.belongsTo(models.Users, {
+        foreignKey: "createdBy",
         as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
-      Notices.hasMany(models.NoticesReads, {
+      Notices.hasMany(models.NoticeReads, {
         foreignKey: "noticeId",
         as: "reads",
       });
-      Notices.hasMany(models.NoticesAttachments, {
-        foreignKey: "noticeId",
+      Notices.hasMany(models.NoticeAttachments, {
+        foreignKey: "noticeID",
         as: "attachments",
       });
     }

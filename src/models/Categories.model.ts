@@ -1,4 +1,3 @@
-
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 interface CategoryAttributes {
@@ -12,7 +11,8 @@ interface CategoryCreationAttributes
   extends Optional<CategoryAttributes, "id" | "isDeleted" | "createdAt"> {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Categories extends Model<CategoryAttributes, CategoryCreationAttributes>
+  class Categories
+    extends Model<CategoryAttributes, CategoryCreationAttributes>
     implements CategoryAttributes
   {
     public id!: string;
@@ -24,14 +24,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Categories.hasOne(models.StudentProfiles, {
         foreignKey: "categoriesId",
         as: "studentProfiles",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
     }
   }
   Categories.init(
     {
-        id: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -56,8 +54,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       modelName: "Categories",
       tableName: "Categories",
       freezeTableName: true,
-      timestamps: false,   
-      underscored: true,   
+      timestamps: false,
+      underscored: true,
     }
   );
 

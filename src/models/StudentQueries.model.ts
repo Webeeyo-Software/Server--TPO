@@ -25,17 +25,32 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      StudentQueries.belongsTo(models.Users, { foreignKey: "userId", as: "user", onUpdate: "CASCADE", onDelete: "CASCADE" });
-      StudentQueries.hasMany(models.QueryResponses, { foreignKey: "queryId", as: "responses", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      StudentQueries.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      StudentQueries.hasMany(models.QueryResponses, {
+        foreignKey: "queryId",
+        as: "responses",
+      });
     }
   }
 
   StudentQueries.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       userId: { type: DataTypes.UUID, allowNull: false },
       question: { type: DataTypes.TEXT, allowNull: false },
-      status: { type: DataTypes.ENUM("Pending", "Answered", "Closed"), defaultValue: "Pending" },
+      status: {
+        type: DataTypes.ENUM("Pending", "Answered", "Closed"),
+        defaultValue: "Pending",
+      },
       createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
       isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
     },

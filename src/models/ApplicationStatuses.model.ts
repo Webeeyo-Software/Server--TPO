@@ -10,7 +10,10 @@ interface ApplicationStatusesCreationAttributes
 
 module.exports = (sequelize: Sequelize) => {
   class ApplicationStatuses
-    extends Model<ApplicationStatusesAttributes, ApplicationStatusesCreationAttributes>
+    extends Model<
+      ApplicationStatusesAttributes,
+      ApplicationStatusesCreationAttributes
+    >
     implements ApplicationStatusesAttributes
   {
     public id!: string;
@@ -20,8 +23,6 @@ module.exports = (sequelize: Sequelize) => {
       ApplicationStatuses.hasMany(models.Applications, {
         foreignKey: "id",
         as: "applications",
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
       });
     }
   }

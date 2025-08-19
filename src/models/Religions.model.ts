@@ -7,23 +7,24 @@ type ReligionAttributes = {
   createdAt?: Date;
 };
 
-interface ReligionCreationAttributes extends Optional<ReligionAttributes, "id"> {}
+interface ReligionCreationAttributes
+  extends Optional<ReligionAttributes, "id"> {}
 
 module.exports = (sequelize: Sequelize) => {
-  class Religions extends Model<ReligionAttributes, ReligionCreationAttributes>
-    implements ReligionAttributes {
+  class Religions
+    extends Model<ReligionAttributes, ReligionCreationAttributes>
+    implements ReligionAttributes
+  {
     public id!: string;
     public religionName!: string;
     public isDeleted!: boolean | false;
     public readonly createdAt?: Date;
 
     static associate(models: any) {
-    Religions.hasOne(models.StudentProfiles, {
-     foreignKey: "religionId", 
-     as: "studentProfiles",   
-     onDelete: "CASCADE",
-     onUpdate: "CASCADE",            
-});
+      Religions.hasOne(models.StudentProfiles, {
+        foreignKey: "religionId",
+        as: "studentProfiles",
+      });
     }
   }
   Religions.init(
@@ -54,7 +55,6 @@ module.exports = (sequelize: Sequelize) => {
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-
     }
   );
 

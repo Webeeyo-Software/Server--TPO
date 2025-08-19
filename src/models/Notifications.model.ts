@@ -33,7 +33,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         as: "users",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-      });     
+      });
     }
   }
 

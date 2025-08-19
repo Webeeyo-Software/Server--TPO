@@ -25,14 +25,28 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      Documents.belongsTo(models.Users, { foreignKey: "userId", as: "user", onUpdate: "CASCADE", onDelete: "CASCADE" });
-      Documents.belongsTo(models.DocumentTypes, { foreignKey: "typeId", as: "documentType", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      Documents.belongsTo(models.Users, {
+        foreignKey: "userId",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      Documents.belongsTo(models.DocumentTypes, {
+        foreignKey: "typeId",
+        as: "documentType",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
 
   Documents.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       userId: { type: DataTypes.UUID, allowNull: false },
       typeId: { type: DataTypes.UUID, allowNull: false },
       fileUrl: { type: DataTypes.TEXT, allowNull: false },

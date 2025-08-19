@@ -25,14 +25,28 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      QueryResponses.belongsTo(models.StudentQueries, { foreignKey: "queryId", as: "query", onUpdate: "CASCADE", onDelete: "CASCADE" });
-      QueryResponses.belongsTo(models.Users, { foreignKey: "responderId", as: "responder", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      QueryResponses.belongsTo(models.StudentQueries, {
+        foreignKey: "queryId",
+        as: "query",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
+      QueryResponses.belongsTo(models.Users, {
+        foreignKey: "responderId",
+        as: "responder",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
 
   QueryResponses.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       queryId: { type: DataTypes.UUID, allowNull: false },
       responderId: { type: DataTypes.UUID, allowNull: false },
       response: { type: DataTypes.TEXT, allowNull: false },
@@ -41,7 +55,7 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      modelName: "QueryResponse",
+      modelName: "QueryResponses",
       tableName: "QueryResponses",
       freezeTableName: true,
       timestamps: false,

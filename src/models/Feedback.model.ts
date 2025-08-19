@@ -29,15 +29,34 @@ module.exports = (sequelize: Sequelize) => {
     public isDeleted?: boolean;
 
     static associate(models: any) {
-      Feedback.belongsTo(models.Users, { foreignKey: "submittedBy", as: "submittedBy", onUpdate: "CASCADE", onDelete: "CASCADE" });
-      Feedback.belongsTo(models.Users, { foreignKey: "submittedFor", as: "submittedFor", onUpdate: "CASCADE", onDelete: "CASCADE" });
-      Feedback.belongsTo(models.FeedbackTypes, { foreignKey: "feedbackTypeId", as: "feedbackType", onUpdate: "CASCADE", onDelete: "CASCADE" });
+      Feedback.belongsTo(models.Users, {
+        foreignKey: "submittedBy",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      Feedback.belongsTo(models.Users, {
+        foreignKey: "submittedFor",
+        as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      Feedback.belongsTo(models.FeedbackTypes, {
+        foreignKey: "feedbackTypeId",
+        as: "feedbackType",
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      });
     }
   }
 
   Feedback.init(
     {
-      id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       submittedBy: { type: DataTypes.UUID, allowNull: false },
       submittedFor: { type: DataTypes.UUID, allowNull: false },
       feedbackTypeId: { type: DataTypes.UUID, allowNull: false },

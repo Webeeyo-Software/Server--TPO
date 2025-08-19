@@ -20,8 +20,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       BloodGroups.hasMany(models.StudentProfiles, {
         foreignKey: "bgId",
         as: "students",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
     }
   }

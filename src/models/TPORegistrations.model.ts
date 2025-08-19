@@ -34,10 +34,14 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       TPORegistrations.belongsTo(models.Users, {
         foreignKey: "userId",
         as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
       TPORegistrations.belongsTo(models.Users, {
         foreignKey: "verifiedBy",
         as: "verifier",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
     }
   }

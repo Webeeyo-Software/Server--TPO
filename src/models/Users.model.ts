@@ -36,88 +36,72 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Users.hasOne(models.UserRole, {
         foreignKey: "userId",
         as: "userRoles",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
       Users.hasOne(models.StudentProfiles, {
         foreignKey: "userId",
         as: "studentProfiles",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
       Users.hasOne(models.Companies, {
         foreignKey: "userId",
         as: "companies",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
       Users.hasMany(models.PlacementDrives, {
-        foreignKey: "userId",
+        foreignKey: "postedBy",
         as: "placementDrives",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
       Users.hasMany(models.Notifications, {
         foreignKey: "userId",
         as: "notifications",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
 
       Users.hasMany(models.Notices, {
-        foreignKey: "userId",
+        foreignKey: "createdBy",
         as: "notices",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
 
       Users.hasMany(models.NoticeReads, {
         foreignKey: "userId",
         as: "noticeReads",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
 
       Users.hasMany(models.Applications, {
         foreignKey: "userId",
         as: "applications",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
 
       Users.hasMany(models.QueryResponses, {
-        foreignKey: "userId",
+        foreignKey: "responderId",
         as: "queryResponses",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
 
       Users.hasMany(models.StudentQueries, {
         foreignKey: "userId",
         as: "studentQueries",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
 
       Users.hasMany(models.TPORegistrations, {
         foreignKey: "userId",
         as: "TPORegistrations",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+      });
+
+      Users.hasMany(models.TPORegistrations, {
+        foreignKey: "verifiedBy",
+        as: "TPORegistration",
       });
 
       Users.hasMany(models.Feedback, {
-        foreignKey: "userId",
+        foreignKey: "submittedBy",
         as: "feedbacks",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+      });
+
+      Users.hasMany(models.Feedback, {
+        foreignKey: "submittedFor",
+        as: "feedback",
       });
 
       Users.hasMany(models.Documents, {
         foreignKey: "userId",
         as: "documents",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       });
     }
 

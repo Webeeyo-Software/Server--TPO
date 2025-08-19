@@ -10,9 +10,11 @@ type FeedbackTypeAttributes = {
 interface FeedbackTypeCreationAttributes
   extends Optional<FeedbackTypeAttributes, "id"> {}
 
-module.exports = (sequelize: Sequelize,DataTypes: any) => {
-  class FeedbackTypes extends Model<FeedbackTypeAttributes, FeedbackTypeCreationAttributes>
-    implements FeedbackTypeAttributes {
+module.exports = (sequelize: Sequelize, DataTypes: any) => {
+  class FeedbackTypes
+    extends Model<FeedbackTypeAttributes, FeedbackTypeCreationAttributes>
+    implements FeedbackTypeAttributes
+  {
     public id!: string;
     public typeName!: string;
     public description?: string;
@@ -20,12 +22,10 @@ module.exports = (sequelize: Sequelize,DataTypes: any) => {
     public readonly createdAt?: Date;
 
     static associate(models: any) {
-    FeedbackTypes.hasMany(models.Feedback, {
-     foreignKey: "FeedbackTypesId", 
-     as: "id",   
-     onDelete: "CASCADE",
-     onUpdate: "CASCADE",     
-    });
+      FeedbackTypes.hasMany(models.Feedback, {
+        foreignKey: "FeedbackTypesId",
+        as: "FeedbackId",
+      });
     }
   }
 
