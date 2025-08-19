@@ -45,22 +45,19 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
             PlacementDrives.belongsTo(models.DriveTypes, {
                 foreignKey: 'driveTypeId',
                 as: 'driveType',
-                onDelete: "CASCADE",
-                onUpdate: "CASCADE",
+
             });
             
             PlacementDrives.belongsTo(models.Companies, {
                 foreignKey: 'companyId',
                 as: 'company',
-                onDelete: "CASCADE",
-                onUpdate: "CASCADE",
+
             });
             
             PlacementDrives.belongsTo(models.Users, {
                 foreignKey: 'postedBy',
                 as: 'postedByUser',
-                onDelete: "CASCADE",
-                onUpdate: "CASCADE",
+
             });
             
             PlacementDrives.hasMany(models.Attachments, {

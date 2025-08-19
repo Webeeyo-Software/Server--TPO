@@ -28,14 +28,12 @@ module.exports = (sequelize: Sequelize) => {
       QueryResponses.belongsTo(models.StudentQueries, {
         foreignKey: "queryId",
         as: "query",
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+
       });
       QueryResponses.belongsTo(models.Users, {
         foreignKey: "responderId",
         as: "responder",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+
       });
     }
   }

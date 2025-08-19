@@ -26,14 +26,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       NoticeReads.belongsTo(models.Notices, {
         foreignKey: "noticeId",
         as: "notices",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+
       });
       NoticeReads.belongsTo(models.Users, {
         foreignKey: "userId",
         as: "users",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+
       });
     }
   }

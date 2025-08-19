@@ -28,14 +28,12 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Applications.belongsTo(models.Users, {
         foreignKey: "userId",
         as: "users",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+
       });
       Applications.belongsTo(models.PlacementDrives, {
         foreignKey: "driveId",
         as: "drives",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+
       });
       Applications.hasMany(models.ApplicationQuestions, {
         foreignKey: "applicationId",
@@ -48,8 +46,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Applications.belongsTo(models.ApplicationStatuses, {
         foreignKey: "statusId",
         as: "status",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+
       });
     }
   }
