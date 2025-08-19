@@ -40,7 +40,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "DriveTypes",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
   return DriveTypes;

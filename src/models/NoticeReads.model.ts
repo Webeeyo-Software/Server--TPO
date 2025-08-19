@@ -66,7 +66,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "NoticeReads",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

@@ -59,7 +59,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "UserRole",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

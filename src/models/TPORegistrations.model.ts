@@ -80,7 +80,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "TPORegistrations",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

@@ -65,7 +65,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "Attachments",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
   return Attachments;

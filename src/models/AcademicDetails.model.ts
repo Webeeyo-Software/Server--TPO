@@ -134,7 +134,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "AcademicDetails",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

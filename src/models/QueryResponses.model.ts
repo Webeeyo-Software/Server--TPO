@@ -57,7 +57,6 @@ module.exports = (sequelize: Sequelize) => {
       tableName: "QueryResponses",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

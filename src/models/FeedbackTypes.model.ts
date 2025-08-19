@@ -60,7 +60,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "FeedbackTypes",
       timestamps: false,
       freezeTableName: true,
-      underscored: true,
     }
   );
 

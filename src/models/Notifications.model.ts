@@ -71,7 +71,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "Notifications",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

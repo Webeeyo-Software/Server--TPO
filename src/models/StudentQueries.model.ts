@@ -60,7 +60,6 @@ module.exports = (sequelize: Sequelize) => {
       tableName: "StudentQueries",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

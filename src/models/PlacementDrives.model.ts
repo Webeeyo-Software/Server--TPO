@@ -126,7 +126,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
             tableName: 'PlacementDrives',
             freezeTableName: true,
             timestamps: true, // Changed to true to match interface
-            underscored: true,
         }
     );
 
