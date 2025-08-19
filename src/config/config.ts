@@ -21,6 +21,7 @@ const config: Config = {
       Options: {
         encrypt: false,
         trustSeverCertificate: true,
+        requestTimeout: 60000,
       },
     },
     logging: console.log,
