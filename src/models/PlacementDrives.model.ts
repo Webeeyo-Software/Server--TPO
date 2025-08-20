@@ -12,8 +12,8 @@ interface PlacementDrivesAttributes {
   ctc: number;
   driveTypeId: string;
   applicationDeadline: Date;
-  minpack?: number;
-  maxpack?: number;
+  minPack?: number;
+  maxPack?: number;
   appliedStatus?: boolean;
   deptId?: string;
   isDeleted?: boolean; // Removed 'false' string option
@@ -43,8 +43,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public ctc!: number;
     public driveTypeId!: string;
     public applicationDeadline!: Date;
-    public minpack?: number;
-    public maxpack?: number;
+    public minPack?: number;
+    public maxPack?: number;
     public appliedStatus?: boolean;
     public deptId?: string;
     public isDeleted!: boolean;
@@ -75,6 +75,11 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       PlacementDrives.hasMany(models.Attachments, {
         foreignKey: "driveId",
         as: "attachments",
+      });
+
+      PlacementDrives.belongsTo(models.Departments, {
+        foreignKey: "deptId",
+        as: "departments",
       });
     }
   }
@@ -124,6 +129,23 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       },
       applicationDeadline: {
         type: DataTypes.DATE,
+        allowNull: false,
+      },
+      minPack: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      maxPack: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      deptId:{
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      appliedStatus: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
         allowNull: false,
       },
       isDeleted: {
