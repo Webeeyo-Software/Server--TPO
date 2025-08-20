@@ -46,12 +46,8 @@ export const syncDatabase = async () => {
         await sequelize.authenticate();
         console.log('Database Connection has been established successfully.');
 
-        await sequelize.sync({force: true});
-        console.log('Database & tables created!');
-        // In your server startup
-db.sequelize.sync({ force: false }) // false = only create missing tables
-  .then(() => console.log("Database synced"));
-
+        // await sequelize.sync({force: true});
+        // console.log('Database & tables created!');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
         process.exit(1);

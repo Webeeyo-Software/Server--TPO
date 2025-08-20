@@ -51,15 +51,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "companyId",
         as: "placementDrives",
       });
-      Companies.hasMany(models.Questions, {
-        foreignKey: "companyId",
-        as: "questions",
-      });
-
-      Companies.hasMany(models.QuestionBank, {
-        foreignKey: "companyId",
-        as: "questionBank",
-      });
 
     }
   }
