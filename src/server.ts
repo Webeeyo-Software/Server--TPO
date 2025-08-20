@@ -1,6 +1,7 @@
 import express, {Request, Response, Application } from 'express';
 import dotenv from 'dotenv';
 import sequelize, { syncDatabase } from './models';
+import CompaniesRoutes from "./routers/companies/CompaniesRoutes"
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ app.use(express.json());
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
 });
+
+app.use("/api/companies", CompaniesRoutes);
 
 async function startServer(){
   await syncDatabase();
