@@ -52,6 +52,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         as: "placementDrives",
       });
 
+      Companies.hasMany(models.QuestionBank, {
+        foreignKey: "companyId",
+        as: "questions",
+      });
     }
   }
 
