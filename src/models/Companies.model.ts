@@ -23,8 +23,7 @@ type CompaniesCreationAttributes = Optional<
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class Companies
     extends Model<CompaniesAttributes, CompaniesCreationAttributes>
-    implements CompaniesAttributes
-  {
+    implements CompaniesAttributes {
     public id!: string;
     public name!: string;
     public userId!: string;
@@ -51,6 +50,11 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       Companies.hasMany(models.PlacementDrives, {
         foreignKey: "companyId",
         as: "placementDrives",
+      });
+
+      Companies.hasMany(models.QuestionBank, {
+        foreignKey: "companyId",
+        as: "questions",
       });
     }
   }
@@ -92,6 +96,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "Companies",
       freezeTableName: true,
       timestamps: false,
+      underscored: true,
     }
   );
 
