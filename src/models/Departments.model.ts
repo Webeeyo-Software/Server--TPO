@@ -34,11 +34,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+
       },
       deptName: {
         type: DataTypes.STRING(50),
         allowNull: false,
         unique: true,
+        field: "dept_name",
       },
     },
     {
