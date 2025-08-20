@@ -6,10 +6,16 @@ interface StudentProfilesAttributes {
   fname: string;
   mname?: string;
   lname: string;
+  email:string;
   gender: "Male" | "Female" | "Other";
   dob: Date;
   mobile: string;
-  address: string;
+  localAddress: string;
+  permanentAddress: string;
+  pincode: string;
+  state: string;
+  district: string;
+  country: string;
   deptId?: string;
   year: "FE" | "SE" | "TE" | "BE";
   bgId?: string;
@@ -49,10 +55,16 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public fname!: string;
     public mname?: string;
     public lname!: string;
+    public email!: string;
     public gender!: "Male" | "Female" | "Other";
     public dob!: Date;
     public mobile!: string;
-    public address!: string;
+    public localAddress!: string;
+    public permanentAddress!: string;
+    public pincode!: string;
+    public state!: string;
+    public district!: string;
+    public country!: string;
     public deptId!: string;
     public year!: "FE" | "SE" | "TE" | "BE";
     public bgId!: string;
@@ -139,6 +151,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      email: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        validate: {
+          isEmail: true,
+        },
+      },
       gender: {
         type: DataTypes.ENUM("Male", "Female", "Other"),
         allowNull: false,
@@ -151,10 +170,31 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.STRING(15),
         allowNull: false,
       },
-      address: {
+      localAddress: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      permanentAddress: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      pincode: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
+      state: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      district: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      country: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+
       deptId: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -224,3 +264,4 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
   );
   return StudentProfiles;
 };
+

@@ -3,14 +3,44 @@ import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 interface AcademicDetailsAttributes {
   id: string;
   registrationNo: bigint;
+  // SSC
   sscPercent?: number;
   sscBoard?: string;
   sscYear?: number;
+
+  // HSC
   hscPercent?: number;
   hscBoard?: string;
   hscYear?: number;
+
+  // Diploma
+  diplomaPercent?: number;
+  diplomaBoard?: string;
+  diplomaYear?: number;
+
+  // Graduation
+  graduationCPI?: number;
+  graduationSPI?: number;
+  graduationYear?: number;
+  graduationInstitute?: string;
+  graduationUniversity?: string;
+
+  // Post-Graduation
+  postGraduationCPI?: number;
+
+  // General
+  highestQualification?: string;
   cgpa?: number;
   backlogs?: number;
+  deadBacklogs?: number;
+  activeBacklogs?: number;
+  backlogName?: string;
+
+  // Flags (from toggle switches in UI)
+  isDirectSecondYear?: boolean;
+  isGoingForHigherStudies?: boolean;
+  isInterestedOnlyInInternship?: boolean;
+
   isDeleted?: boolean;
 }
 
@@ -39,11 +69,34 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public sscPercent?: number;
     public sscBoard?: string;
     public sscYear?: number;
+
     public hscPercent?: number;
     public hscBoard?: string;
     public hscYear?: number;
+
+    public diplomaPercent?: number;
+    public diplomaBoard?: string;
+    public diplomaYear?: number;
+
+    public graduationCPI?: number;
+    public graduationSPI?: number;
+    public graduationYear?: number;
+    public graduationInstitute?: string;
+    public graduationUniversity?: string;
+
+    public postGraduationCPI?: number;
+
+    public highestQualification?: string;
     public cgpa?: number;
     public backlogs?: number;
+    public deadBacklogs?: number;
+    public activeBacklogs?: number;
+    public backlogName?: string;
+
+    public isDirectSecondYear?: boolean;
+    public isGoingForHigherStudies?: boolean;
+    public isInterestedOnlyInInternship?: boolean;
+
     public isDeleted?: boolean;
 
     static associate(models: any) {
@@ -67,60 +120,44 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
-      sscPercent: {
-        type: DataTypes.DECIMAL(5, 2),
-        allowNull: true,
-        validate: {
-          min: 0,
-          max: 100,
-        },
-      },
-      sscBoard: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-      },
-      sscYear: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        validate: {
-          min: 1900,
-          max: new Date().getFullYear(),
-        },
-      },
-      hscPercent: {
-        type: DataTypes.DECIMAL(5, 2),
-        allowNull: true,
-        validate: {
-          min: 0,
-          max: 100,
-        },
-      },
-      hscBoard: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
-      },
-      hscYear: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        validate: {
-          min: 1900,
-          max: new Date().getFullYear(),
-        },
-      },
-      cgpa: {
-        type: DataTypes.DECIMAL(4, 2),
-        allowNull: true,
-        validate: {
-          min: 0,
-          max: 10,
-        },
-      },
-      backlogs: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        validate: {
-          min: 0,
-        },
+      sscPercent: { type: DataTypes.DECIMAL(5, 2), allowNull: true },
+      sscBoard: { type: DataTypes.STRING(100), allowNull: true },
+      sscYear: { type: DataTypes.INTEGER, allowNull: true },
+
+      // HSC
+      hscPercent: { type: DataTypes.DECIMAL(5, 2), allowNull: true },
+      hscBoard: { type: DataTypes.STRING(100), allowNull: true },
+      hscYear: { type: DataTypes.INTEGER, allowNull: true },
+
+      // Diploma
+      diplomaPercent: { type: DataTypes.DECIMAL(5, 2), allowNull: true },
+      diplomaBoard: { type: DataTypes.STRING(100), allowNull: true },
+      diplomaYear: { type: DataTypes.INTEGER, allowNull: true },
+
+      // Graduation
+      graduationCPI: { type: DataTypes.DECIMAL(4, 2), allowNull: true },
+      graduationSPI: { type: DataTypes.DECIMAL(4, 2), allowNull: true },
+      graduationYear: { type: DataTypes.INTEGER, allowNull: true },
+      graduationInstitute: { type: DataTypes.STRING(255), allowNull: true },
+      graduationUniversity: { type: DataTypes.STRING(255), allowNull: true },
+
+      // Post-Graduation
+      postGraduationCPI: { type: DataTypes.DECIMAL(4, 2), allowNull: true },
+
+      highestQualification: { type: DataTypes.STRING(50), allowNull: true },
+
+      cgpa: { type: DataTypes.DECIMAL(4, 2), allowNull: true },
+      backlogs: { type: DataTypes.INTEGER, allowNull: true },
+      deadBacklogs: { type: DataTypes.INTEGER, allowNull: true },
+      activeBacklogs: { type: DataTypes.INTEGER, allowNull: true },
+      backlogName: { type: DataTypes.STRING(255), allowNull: true },
+
+      // Toggles
+      isDirectSecondYear: { type: DataTypes.BOOLEAN, defaultValue: false },
+      isGoingForHigherStudies: { type: DataTypes.BOOLEAN, defaultValue: false },
+      isInterestedOnlyInInternship: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,
