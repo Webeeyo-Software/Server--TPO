@@ -1,7 +1,7 @@
 import express, {Request, Response, Application } from 'express';
 import dotenv from 'dotenv';
 import sequelize, { syncDatabase } from './models';
-
+import router from "./routers/tpoRegistration/TPORegistration.routes"
 dotenv.config();
 
 const app: Application = express();
@@ -12,7 +12,7 @@ app.use(express.json());
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
 });
-
+app.use("/api/tpo-registrations", router);
 async function startServer(){
   await syncDatabase();
   app.listen(PORT, ()=>{
