@@ -5,7 +5,6 @@ import router from './routers/profile/PersonalDetails.router';
 import Religionsrouter from './routers/profile/Religions.router';
 import DepartmentRouter from './routers/profile/Department.router';
 import BloodgroupRouter from './routers/profile/Bloodgroup.router';
-
 dotenv.config();
 
 const app: Application = express();

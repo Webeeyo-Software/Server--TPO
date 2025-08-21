@@ -65,7 +65,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        unique: true,
       },
       name: {
         type: DataTypes.STRING(100),
@@ -96,7 +95,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "Companies",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 
