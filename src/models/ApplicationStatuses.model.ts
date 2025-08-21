@@ -46,7 +46,6 @@ module.exports = (sequelize: Sequelize) => {
       tableName: "ApplicationStatuses",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

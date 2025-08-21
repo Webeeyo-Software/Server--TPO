@@ -41,7 +41,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         as: "reads",
       });
       Notices.hasMany(models.NoticeAttachments, {
-        foreignKey: "noticeID",
+        foreignKey: "noticeId",
         as: "attachments",
       });
     }
@@ -67,7 +67,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "Notices",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

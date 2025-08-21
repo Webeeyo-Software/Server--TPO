@@ -71,7 +71,6 @@ module.exports = (sequelize: Sequelize) => {
       tableName: "Feedback",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

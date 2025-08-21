@@ -54,7 +54,6 @@ module.exports = (sequelize: Sequelize) => {
       tableName: "Religions",
       timestamps: false,
       freezeTableName: true,
-      underscored: true,
     }
   );
 

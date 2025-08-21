@@ -6,13 +6,21 @@ interface TPORegistrationsAttributes {
   verifiedBy?: string;
   verifiedAt?: Date;
   status?: "Pending" | "Verified" | "Rejected";
+  driveTypeId: string; 
+  academicYear: string;
+  createdAt?: Date;
   isDeleted?: boolean;
 }
 
 interface TPORegistrationsCreationAttributes
   extends Optional<
     TPORegistrationsAttributes,
-    "id" | "verifiedBy" | "verifiedAt" | "status" | "isDeleted"
+    | "id"
+    | "verifiedBy"
+    | "verifiedAt"
+    | "status"
+    | "createdAt"
+    | "isDeleted"
   > {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
@@ -28,20 +36,28 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public verifiedBy?: string;
     public verifiedAt?: Date;
     public status?: "Pending" | "Verified" | "Rejected";
+    public driveTypeId!: string;   
+    public academicYear!: string;
+    public createdAt?: Date;
     public isDeleted?: boolean;
 
     static associate(models: any) {
       TPORegistrations.belongsTo(models.Users, {
         foreignKey: "userId",
         as: "user",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        
       });
+
       TPORegistrations.belongsTo(models.Users, {
         foreignKey: "verifiedBy",
         as: "verifier",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+       
+      });
+
+      TPORegistrations.belongsTo(models.DriveTypes, {
+        foreignKey: "driveTypeId", 
+        as: "driveType",
+       
       });
     }
   }
@@ -69,6 +85,18 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.ENUM("Pending", "Verified", "Rejected"),
         defaultValue: "Pending",
       },
+      driveTypeId: { 
+        type: DataTypes.UUID,
+        allowNull: false,
+      },
+      academicYear: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -80,7 +108,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "TPORegistrations",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

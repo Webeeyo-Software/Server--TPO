@@ -59,7 +59,6 @@ module.exports = (sequelize: Sequelize) => {
       tableName: "Documents",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

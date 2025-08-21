@@ -64,7 +64,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       modelName: "OfferLetters",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
   return OfferLetters;

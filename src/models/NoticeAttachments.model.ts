@@ -68,7 +68,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "NoticeAttachments",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 

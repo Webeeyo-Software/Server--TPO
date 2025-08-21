@@ -19,6 +19,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "driveTypeId",
         as: "placementDrives",
       });
+       DriveTypes.hasMany(models.TPORegistrations, {
+        foreignKey: "driveTypeId",
+        as: "TPORegistrations",
+      });
     }
   }
   DriveTypes.init(
@@ -40,7 +44,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "DriveTypes",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
   return DriveTypes;

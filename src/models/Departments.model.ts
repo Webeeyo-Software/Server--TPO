@@ -21,6 +21,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "deptId",
         as: "students",
       });
+      Departments.hasMany(models.PlacementDrives, {
+        foreignKey: "deptId",
+        as: "placementDrives",
+      });
     }
   }
 
@@ -30,11 +34,13 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+
       },
       deptName: {
         type: DataTypes.STRING(50),
         allowNull: false,
         unique: true,
+        field: "dept_name",
       },
     },
     {
@@ -43,7 +49,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       tableName: "Departments",
       freezeTableName: true,
       timestamps: false,
-      underscored: true,
     }
   );
 
