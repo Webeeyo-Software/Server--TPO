@@ -11,7 +11,9 @@ export const deleteRegistration = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Registration not found" });
     }
 
-    await registration.update({ isDeleted: true });
+    // await registration.update({ isDeleted: true });
+    await registration.destroy();
+
 
     res.json({ message: "Registration deleted successfully" });
   } catch (error) {

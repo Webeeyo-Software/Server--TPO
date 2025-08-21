@@ -22,7 +22,7 @@ app.use("/api/tpo-registrations", TPORegistrations );
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
 });
-app.use("/api/tpo-registrations", router);
+app.use("/api/tpo-registrations", TPORegistrations );
 async function startServer(){
   await syncDatabase();
   app.listen(PORT, ()=>{
