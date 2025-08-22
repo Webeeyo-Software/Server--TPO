@@ -10,6 +10,12 @@ interface StudentProfilesAttributes {
   gender: "Male" | "Female" | "Other";
   dob: Date;
   mobile: string;
+  localAddress: string;
+  permanentAddress: string;
+  pincode: string;
+  state: string;
+  district: string;
+  country: string;
   deptId?: string;
   year: "FE" | "SE" | "TE" | "BE";
   bgId?: string;
@@ -120,15 +126,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "registrationNo",
         as: "uploadCVS",
       });
-      StudentProfiles.hasMany(models.AddressDetails, {
-        foreignKey: "registrationNo",
-        as: "AddressDetails",
-      });
-      StudentProfiles.hasMany(models.ExaminationDetails, {
-        foreignKey: "registrationNo",
-        as: "ExaminationDetails",
-      });
-
     }
   }
 
@@ -241,4 +238,3 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
   );
   return StudentProfiles;
 };
-

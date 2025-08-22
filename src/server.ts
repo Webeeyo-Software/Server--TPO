@@ -10,13 +10,14 @@ import Addressrouter from './routers/profile/AddressDetails.router';
 import ExaminationDetailsRouter from './routers/profile/ExaminationDetails.router';
 import AcademicDetailsrouter from './routers/profile/AcademicDetails.router';
 import categoryrouter from './routers/profile/Categories.router';
-dotenv.config();
 
+dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json());
+
 app.use('/api/profile/personal-details', router);
 app.use('/api/profile/religions', Religionsrouter);
 app.use('/api/profile/departments', DepartmentRouter);
@@ -26,6 +27,7 @@ app.use('/api/profile/address', Addressrouter);
 app.use('/api/profile/examination-details', ExaminationDetailsRouter);
 app.use('/api/profile/academic-details', AcademicDetailsrouter);
 app.use('/api/profile/categories', categoryrouter);
+
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
