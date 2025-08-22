@@ -7,7 +7,6 @@ import DepartmentRouter from './routers/profile/Department.router';
 import BloodgroupRouter from './routers/profile/Bloodgroup.router';
 import companies from './routers/companies/companies';
 import TPORegistrations from "./routers/tpoRegistration/TPORegistration.routes";
-import companiesRouter from './routers/companies/companies';
 dotenv.config();
 
 const app: Application = express();
@@ -25,8 +24,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Mount under /api/companies
-app.use("/api/companies", companiesRouter);
-
 async function startServer() {
   await syncDatabase(); // keeps your DB auth step
   app.listen(PORT, () => {
