@@ -10,12 +10,7 @@ interface StudentProfilesAttributes {
   gender: "Male" | "Female" | "Other";
   dob: Date;
   mobile: string;
-  localAddress: string;
-  permanentAddress: string;
-  pincode: string;
-  state: string;
-  district: string;
-  country: string;
+  
   deptId?: string;
   year: "FE" | "SE" | "TE" | "BE";
   bgId?: string;

@@ -25,6 +25,7 @@ interface AcademicDetailsAttributes {
   // Graduation
   graduationCPI?: number;
   graduationSPI?: number;
+  graduationPercent?: number;
   graduationYear?: number;
   graduationInstitute?: string;
   graduationUniversity?: string;
@@ -48,7 +49,6 @@ interface AcademicDetailsAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
 interface AcademicDetailsCreationAttributes
   extends Optional<
     AcademicDetailsAttributes,
@@ -62,7 +62,9 @@ interface AcademicDetailsCreationAttributes
     | "cgpa"
     | "backlogs"
     | "isDeleted"
+    | "graduationPercent"
   > {}
+  
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
   class AcademicDetails
