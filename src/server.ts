@@ -1,12 +1,18 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import authRoutes from "./routers/auth/auth";
 import db from "./models";
 import userRoutes from "./routers/auth/user";
-;
+import companies from './routers/companies/companies'
 import TPORegistrations from "./routers/tpoRegistration/TPORegistration.routes";
-import application from "./routers/applications/Application"
+import application from "./routers/applications/application";
+import router from './routers/profile/PersonalDetails.router';
+import Religionsrouter from './routers/profile/Religions.router';
+import DepartmentRouter from './routers/profile/Department.router';
+import BloodgroupRouter from './routers/profile/Bloodgroup.router';
+import sequelize, { syncDatabase } from './models';
+
 dotenv.config();
 const app = express();
 
