@@ -10,12 +10,6 @@ interface StudentProfilesAttributes {
   gender: "Male" | "Female" | "Other";
   dob: Date;
   mobile: string;
-  localAddress: string;
-  permanentAddress: string;
-  pincode: string;
-  state: string;
-  district: string;
-  country: string;
   deptId?: string;
   year: "FE" | "SE" | "TE" | "BE";
   bgId?: string;
@@ -59,12 +53,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public gender!: "Male" | "Female" | "Other";
     public dob!: Date;
     public mobile!: string;
-    public localAddress!: string;
-    public permanentAddress!: string;
-    public pincode!: string;
-    public state!: string;
-    public district!: string;
-    public country!: string;
     public deptId!: string;
     public year!: "FE" | "SE" | "TE" | "BE";
     public bgId!: string;
@@ -132,6 +120,15 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "registrationNo",
         as: "uploadCVS",
       });
+      StudentProfiles.hasMany(models.AddressDetails, {
+        foreignKey: "registrationNo",
+        as: "AddressDetails",
+      });
+      StudentProfiles.hasMany(models.ExaminationDetails, {
+        foreignKey: "registrationNo",
+        as: "ExaminationDetails",
+      });
+
     }
   }
 
@@ -174,31 +171,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.STRING(15),
         allowNull: false,
       },
-      localAddress: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-      },
-      permanentAddress: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-      },
-      pincode: {
-        type: DataTypes.STRING(10),
-        allowNull: false,
-      },
-      state: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      district: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      country: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-
+      
       deptId: {
         type: DataTypes.UUID,
         allowNull: false,
