@@ -1,9 +1,12 @@
+import { Router } from "express";
 import { getCompanyData } from "../../controllers/companies/CompanyDataController";
-import {Router} from "express"
 
 const router = Router();
 
-router.get("/", getCompanyData);
+// GET /api/companies/:companyId
+router.get("/:companyId", getCompanyData);
+
+// Optional: quick health check for the router
+router.get("/ping/check", (_req, res) => res.json({ ok: true }));
 
 export default router;
-
