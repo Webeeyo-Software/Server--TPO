@@ -6,12 +6,12 @@ const Addressrouter = Router();
 
 
 // POST /students/address
-Addressrouter.post("/address", createAddressDetails);
+Addressrouter.post("/", createAddressDetails);
 
 // GET /students/address/:registrationNo
-Addressrouter.get("/address/:registrationNo", getAddressDetails);
+Addressrouter.get("/:registrationNo", getAddressDetails);
 
 // PUT /students/address/:registrationNo
-Addressrouter.put("/address/:registrationNo", updateAddressDetails);
+Addressrouter.put("/:registrationNo", updateAddressDetails);
 
 export default Addressrouter;

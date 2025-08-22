@@ -92,6 +92,7 @@ export interface AddressDetailsCreationAttributes extends Optional<AddressDetail
             timestamps: false,
         }
     );
+    return AddressDetails;
 
  }
 

@@ -26,12 +26,15 @@ export const createAcademicDetails = async (req: Request, res: Response) => {
       graduationUniversity,
       postGraduationCPI,
       highestQualification,
+      panNumber,             // ✅ added
+      languages,             // ✅ added
+      yearOfPassing,         // ✅ added
       isDirectSecondYear,
       isGoingForHigherStudies,
       isInterestedOnlyInInternship,
     } = req.body;
 
-    // Validation: check required field
+    // Validation
     if (!registrationNo) {
       return res.status(400).json({ error: "registrationNo is required" });
     }
@@ -58,6 +61,9 @@ export const createAcademicDetails = async (req: Request, res: Response) => {
       graduationUniversity,
       postGraduationCPI,
       highestQualification,
+      panNumber,             // ✅ included
+      languages,             // ✅ included
+      yearOfPassing,         // ✅ included
       isDirectSecondYear,
       isGoingForHigherStudies,
       isInterestedOnlyInInternship,
@@ -75,6 +81,7 @@ export const createAcademicDetails = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const getAcademicDetails = async (req: Request, res: Response) => {
   try {
     const { registrationNo } = req.params;

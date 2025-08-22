@@ -18,6 +18,7 @@ export const createPersonalDetails = async (req: Request, res: Response) => {
       fullName,
       email,
       dob,
+      deptId,
       registrationNumber,
       aadharNumber,
       contactNumber,
@@ -74,7 +75,7 @@ export const createPersonalDetails = async (req: Request, res: Response) => {
       email,
       mobile: contactNumber,
       aadharNumber,
-      deptId: dept.deptId,
+      deptId,
       bgId: bg?.bgId || null,
       nationalityId: nation?.nationalityId || null,
       religionId: rel?.religionId || null,
@@ -102,7 +103,10 @@ export const getStudentProfileById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params; 
 
-    const profile = await StudentProfiles.findOne();
+    const profile = await StudentProfiles.findOne(
+      
+
+    );
 
     if (!profile) {
       return res.status(404).json({ error: "Student profile not found" });

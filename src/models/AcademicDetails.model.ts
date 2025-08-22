@@ -24,7 +24,6 @@ interface AcademicDetailsAttributes {
 
   // Graduation
   graduationCPI?: number;
-  graduationSPI?: number;
   graduationPercent?: number;
   graduationYear?: number;
   graduationInstitute?: string;
@@ -34,13 +33,17 @@ interface AcademicDetailsAttributes {
   postGraduationCPI?: number;
 
   highestQualification?: string;
-  cgpa?: number;
-  backlogs?: number;
-  deadBacklogs?: number;
-  activeBacklogs?: number;
-  backlogName?: string;
 
-  // Flags (from toggle switches in UI)
+  // PAN Number (new)
+  panNumber?: string;
+
+  // Languages (new)
+  languages?: string; // store as comma-separated string or JSON string
+
+  // Year of Passing (new)
+  yearOfPassing?: number;
+
+  // Flags (toggle switches in UI)
   isDirectSecondYear?: boolean;
   isGoingForHigherStudies?: boolean;
   isInterestedOnlyInInternship?: boolean;
@@ -49,28 +52,11 @@ interface AcademicDetailsAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
-interface AcademicDetailsCreationAttributes
-  extends Optional<
-    AcademicDetailsAttributes,
-    | "id"
-    | "sscPercent"
-    | "sscBoard"
-    | "sscYear"
-    | "hscPercent"
-    | "hscBoard"
-    | "hscYear"
-    | "cgpa"
-    | "backlogs"
-    | "isDeleted"
-    | "graduationPercent"
-  > {}
-  
 
-module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class AcademicDetails
-    extends Model<AcademicDetailsAttributes, AcademicDetailsCreationAttributes>
-    implements AcademicDetailsAttributes
-  {
+interface AcademicDetailsCreationAttributes extends Optional<AcademicDetailsAttributes, "id"> {}
+
+module.exports = (sequelize: Sequelize) => {
+  class AcademicDetails extends Model<AcademicDetailsAttributes, AcademicDetailsCreationAttributes> implements AcademicDetailsAttributes {
     public id!: string;
     public registrationNo!: bigint;
 
@@ -98,11 +84,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
     public postGraduationCPI?: number;
 
     public highestQualification?: string;
-    public cgpa?: number;
-    public backlogs?: number;
-    public deadBacklogs?: number;
-    public activeBacklogs?: number;
-    public backlogName?: string;
+
+    public panNumber?: string; // new attribute
+    public languages?: string; // new attribute
+    public yearOfPassing?: number; // new attribute
 
     public isDirectSecondYear?: boolean;
     public isGoingForHigherStudies?: boolean;
@@ -165,19 +150,16 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
 
       highestQualification: { type: DataTypes.STRING(50), allowNull: true },
 
-      cgpa: { type: DataTypes.DECIMAL(4, 2), allowNull: true },
-      backlogs: { type: DataTypes.INTEGER, allowNull: true },
-      deadBacklogs: { type: DataTypes.INTEGER, allowNull: true },
-      activeBacklogs: { type: DataTypes.INTEGER, allowNull: true },
-      backlogName: { type: DataTypes.STRING(255), allowNull: true },
+      // New attributes
+      panNumber: { type: DataTypes.STRING(20), allowNull: true },
+      languages: { type: DataTypes.STRING(255), allowNull: true }, // e.g. "English,Hindi,Spanish"
+      yearOfPassing: { type: DataTypes.INTEGER, allowNull: true },
 
       // Toggles
       isDirectSecondYear: { type: DataTypes.BOOLEAN, defaultValue: false },
       isGoingForHigherStudies: { type: DataTypes.BOOLEAN, defaultValue: false },
-      isInterestedOnlyInInternship: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
+      isInterestedOnlyInInternship: { type: DataTypes.BOOLEAN, defaultValue: false },
+
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -189,7 +171,7 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
       modelName: "AcademicDetails",
       tableName: "AcademicDetails",
       freezeTableName: true,
-      timestamps: false,
+      timestamps: true,
     }
   );
 

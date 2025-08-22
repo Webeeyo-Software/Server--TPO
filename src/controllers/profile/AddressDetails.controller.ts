@@ -59,7 +59,10 @@ export const createAddressDetails = async (req: Request, res: Response) => {
 export const getAddressDetails = async (req: Request, res: Response) => {
   try {
     const { registrationNo } = req.params;
-    const addressDetails = await AddressDetails.findOne({ where: { registrationNo } });
+    const addressDetails = await AddressDetails.findOne({
+      attributes: ["localAddress", "permanentAddress", "pincode", "state", "district", "country"],
+      where: { registrationNo, isDeleted: false }
+    });
 
     if (!addressDetails) {
       return res.status(404).json({ error: "Address details not found" });

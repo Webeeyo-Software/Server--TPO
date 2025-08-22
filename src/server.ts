@@ -23,7 +23,7 @@ app.use('/api/profile/religions', Religionsrouter);
 app.use('/api/profile/departments', DepartmentRouter);
 app.use('/api/profile/bloodgroups', BloodgroupRouter);
 app.use('/api/profile/nationalities', NationalitiesRouter);
-app.use('/api/profile/address', Addressrouter);
+app.use('/api/profile/address-details', Addressrouter);
 app.use('/api/profile/examination-details', ExaminationDetailsRouter);
 app.use('/api/profile/academic-details', AcademicDetailsrouter);
 app.use('/api/profile/categories', categoryrouter);
