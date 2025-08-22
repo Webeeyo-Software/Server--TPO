@@ -91,6 +91,7 @@ export const getAcademicDetails = async (req: Request, res: Response) => {
     }
 
     const academicDetail = await AcademicDetails.findOne({
+      attributes: ["sscPercent", "hscPercent", "diplomaPercent", "graduationPercent", "postGraduationCPI","highestQualification","diplomaInstitute","graduationUniversity","graduationInstitute","graduationYear","graduationCPI","diplomaBoard","diplomaYear","sscBoard","sscYear","sscInstitute","hscBoard","hscYear","hscInstitute","isDirectSecondYear","isGoingForHigherStudies","isInterestedOnlyInInternship"],
       where: { registrationNo },
     });
 

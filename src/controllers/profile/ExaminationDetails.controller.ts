@@ -60,6 +60,7 @@ export const getExaminationDetails = async (req: Request, res: Response) => {
 
     const examDetails = await ExaminationDetails.findOne({
       where: { registrationNo },
+      attributes: ["academicYear", "semester", "cpi", "spi", "deadBacklog", "activeBacklog", "backlogName", "action"],
     });
 
     if (!examDetails) {
