@@ -1,6 +1,6 @@
 // routes/companies.ts
 import { Router } from 'express';
-import { searchCompanies } from '../../controllers/companies/companiesController';
+import { searchCompanies } from '../../controllers/companies/CompaniesController';
 import { getCompanyData } from "../../controllers/companies/CompanyDataController";
 
 const router = Router();
