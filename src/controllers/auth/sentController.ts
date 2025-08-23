@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
-import db from "../../models"; // Adjust the path as needed for your User model import
+import db from "../../models";
 
 interface OtpRecord {
   otp: string;
@@ -10,12 +10,11 @@ interface OtpRecord {
 const otpStore: Map<string, OtpRecord> = new Map();
 const OTP_EXPIRATION_MINUTES = 5;
 
-// Nodemailer setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "tnpportal233@gmail.com",
-    pass: "ipvk rvxf zozg gqvi", // use App Password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
@@ -31,7 +30,6 @@ async function sendOtpEmail(email: string, otp: string) {
   });
 }
 
-// 📩 Send OTP
 export const sendOtp = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
@@ -39,7 +37,6 @@ export const sendOtp = async (req: Request, res: Response) => {
 
     const normalizedEmail = email.toLowerCase();
 
-    // Check if user exists in database
     const user = await db.Users.findOne({ where: { email: normalizedEmail } });
     if (!user) return res.status(404).json({ message: "Email not registered" });
 
@@ -55,7 +52,6 @@ export const sendOtp = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Verify OTP
 export const verifyOtp = async (req: Request, res: Response) => {
   try {
     const { email, otp } = req.body;

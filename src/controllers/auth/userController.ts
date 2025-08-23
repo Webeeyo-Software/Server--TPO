@@ -11,13 +11,11 @@ export const createUser = async (req: Request, res: Response) => {
   }
 
   try {
-    // Check if email already exists
     const existingUser = await Users.findOne({ where: { email } });
     if (existingUser) {
       return res.status(409).json({ message: "Email already registered." });
     }
 
-    // Create new user (password will be hashed via model's beforeSave hook)
     const newUser = await Users.create({
       email,
       password,
@@ -25,7 +23,9 @@ export const createUser = async (req: Request, res: Response) => {
       lastName,
     });
 
-    res.status(201).json({ message: "User created successfully.", userId: newUser.id });
+    res
+      .status(201)
+      .json({ message: "User created successfully.", userId: newUser.id });
   } catch (err) {
     res.status(500).json({ message: "Server error.", error: err });
   }
