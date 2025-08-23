@@ -11,9 +11,9 @@ import router from './routers/profile/PersonalDetails.router';
 import Religionsrouter from './routers/profile/Religions.router';
 import DepartmentRouter from './routers/profile/Department.router';
 import BloodgroupRouter from './routers/profile/Bloodgroup.router';
-import sequelize, { syncDatabase } from './models';
+import { syncDatabase } from './models';
 import { sendOtp ,verifyOtp} from "./controllers/auth/sentController";
-
+import { resetPasswordByEmail } from "./controllers/auth/resetpassword";
 dotenv.config();
 const app = express();
 
@@ -22,6 +22,8 @@ app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 
 app.use("/user", userRoutes);
+app.use("/resetpassword", resetPasswordByEmail);
+
 
 const PORT = process.env.PORT || 3000;
 

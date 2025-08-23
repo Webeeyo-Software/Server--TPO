@@ -1,21 +1,11 @@
-// controllers/auth.controller.ts
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
-
-interface User {
-  id: number;
-  email: string;
-  password?: string; // in real DB this would be hashed
-}
+import db from "../../models"; // Adjust the path as needed for your User model import
 
 interface OtpRecord {
   otp: string;
   expiresAt: Date;
 }
-
-const users: Record<string, User> = {
-  "alohot07@gmail.com": { id: 1, email: "alohot07@gmail.com" },
-};
 
 const otpStore: Map<string, OtpRecord> = new Map();
 const OTP_EXPIRATION_MINUTES = 5;
@@ -48,8 +38,10 @@ export const sendOtp = async (req: Request, res: Response) => {
     if (!email) return res.status(400).json({ message: "Email is required" });
 
     const normalizedEmail = email.toLowerCase();
-    if (!users[normalizedEmail])
-      return res.status(404).json({ message: "Email not registered" });
+
+    // Check if user exists in database
+    const user = await db.Users.findOne({ where: { email: normalizedEmail } });
+    if (!user) return res.status(404).json({ message: "Email not registered" });
 
     const otp = generateOtp();
     const expiresAt = new Date(Date.now() + OTP_EXPIRATION_MINUTES * 60000);
@@ -83,27 +75,6 @@ export const verifyOtp = async (req: Request, res: Response) => {
     return res.json({ message: "OTP verified successfully" });
   } catch (error) {
     console.error("Verify OTP error:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-// 🔑 Reset password
-export const resetPassword = async (req: Request, res: Response) => {
-  try {
-    const { email, newPassword } = req.body;
-    if (!email || !newPassword)
-      return res.status(400).json({ message: "Email and new password required" });
-
-    const normalizedEmail = email.toLowerCase();
-    if (!users[normalizedEmail])
-      return res.status(404).json({ message: "User not found" });
-
-    // Here we’d hash password
-    users[normalizedEmail].password = newPassword;
-
-    return res.json({ message: "Password reset successfully" });
-  } catch (error) {
-    console.error("Reset password error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
