@@ -12,6 +12,7 @@ import Religionsrouter from './routers/profile/Religions.router';
 import DepartmentRouter from './routers/profile/Department.router';
 import BloodgroupRouter from './routers/profile/Bloodgroup.router';
 import sequelize, { syncDatabase } from './models';
+import { sendOtp ,verifyOtp} from "./controllers/auth/sentController";
 
 dotenv.config();
 const app = express();
@@ -32,6 +33,10 @@ app.use('/api/profile/departments', DepartmentRouter);
 app.use('/api/profile/bloodgroups', BloodgroupRouter);
 app.use("/api/tpo-registrations", TPORegistrations );
 app.use("/api/applications", application);
+app.post('/auth/sendOtp', sendOtp);
+app.post('/auth/verifyOtp', verifyOtp);
+
+
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
