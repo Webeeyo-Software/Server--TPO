@@ -19,9 +19,10 @@ export const searchCompanies = async (req: Request, res: Response) => {
     if (search.trim()) {
       const term = `%${search.trim()}%`;
       where[Op.or] = [
+        { id: { [Op.like]: term } },
         { name: { [Op.like]: term } },
         { description: { [Op.like]: term } },
-        { location: { [Op.like]: term } }
+        { location: { [Op.like]: term } },
       ];
     }
 
@@ -31,7 +32,7 @@ export const searchCompanies = async (req: Request, res: Response) => {
       offset,
       order: [["name", "ASC"]],
       distinct: true,
-      attributes: ["id", "name", "userId", "description"] // Only select these fields
+      attributes: ["id", "name", "userId", "description"], 
     });
 
     res.status(200).json({

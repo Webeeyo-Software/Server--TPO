@@ -1,7 +1,7 @@
 // routes/companies.ts
 import { Router } from 'express';
-import { searchCompanies } from '../../controllers/companies/companiesController';
-
+import { searchCompanies } from '../../controllers/companies/CompaniesController';
+import { getCompanyData } from "../../controllers/companies/CompanyDataController";
 const router = Router();
 
 /**
@@ -13,5 +13,7 @@ const router = Router();
  *   status (Active|Inactive, default=Active)
  */
 router.get('/search', searchCompanies);
+router.get("/:companyId", getCompanyData);
+
 
 export default router;
