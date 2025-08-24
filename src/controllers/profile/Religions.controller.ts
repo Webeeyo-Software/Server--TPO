@@ -38,3 +38,12 @@ export const createReligions = async (req: Request, res: Response) => {
     return res.status(500).json({ error: (error as Error).message });
   }
 };
+export const getAllReligions = async (req: Request, res: Response) => {
+  try {
+    const religions = await Religions.findAll({ attributes: ['id', 'religionName'] });
+    return res.status(200).json(religions);
+  } catch (error) {
+    console.error("Error fetching religions:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
+}
