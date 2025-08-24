@@ -17,7 +17,7 @@ dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
  app.use(cors({
-  origin:'http://localhost:8081',
+  origin:'exp://192.168.1.30:8081',
   methods:["POST","GET","PUT","DELETE"],
   allowedHeaders:['content-type','Authorization']
  }))
