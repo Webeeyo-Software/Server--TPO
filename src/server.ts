@@ -30,9 +30,16 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(express.json());
+app.use('/api/offer-letters', offerLetterRouter);
+app.get('/api/offer-letters/:id', getOfferLetterById);
+app.post('/api/cvs/upload', addCVS);
+app.get('/api/cvs', getAllCVs);
+app.put('/api/cvs/:id', updateCV);
+app.delete('/api/cvs/:id', deleteCV);
 
 const PORT = process.env.PORT || 3000;
-app.use("/auth", authRoutes);
+
+app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");

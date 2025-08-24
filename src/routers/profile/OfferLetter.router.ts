@@ -3,7 +3,7 @@ import { uploadOfferLetter } from "../../controllers/profile/OfferLetter.control
 import { getOfferLetterById } from "../../controllers/profile/OfferLetter.controller";
 import multer from "multer";
 
-const OfferLetterrouter = express.Router();
+const router = express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/offerletters"); 
@@ -14,6 +14,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-OfferLetterrouter.post("/", upload.single("file"), uploadOfferLetter);
-OfferLetterrouter.get("/:id", getOfferLetterById);
-export default OfferLetterrouter;
+router.post("/offer-letters/upload", upload.single("file"), uploadOfferLetter);
+router.get("/offer-letters/:id", getOfferLetterById);
+export default router;
