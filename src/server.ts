@@ -24,22 +24,15 @@ import Nationalities from './routers/profile/Nationalities.router';
 import OfferLetter from './routers/profile/OfferLetter.router';
 import PersonalDetails from './routers/profile/PersonalDetails.router';
 import Religions from './routers/profile/Religions.router';
-
+import uploadCv from './routers/profile/UploadCV.router';
 dotenv.config();
 const app = express();
 
 app.use(bodyParser.json());
 app.use(express.json());
-app.use('/api/offer-letters', offerLetterRouter);
-app.get('/api/offer-letters/:id', getOfferLetterById);
-app.post('/api/cvs/upload', addCVS);
-app.get('/api/cvs', getAllCVs);
-app.put('/api/cvs/:id', updateCV);
-app.delete('/api/cvs/:id', deleteCV);
 
 const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
+app.use("/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
@@ -68,7 +61,7 @@ app.use("/api/Nationalities", authenticateToken, Nationalities);
 app.use("/api/OfferLetter", authenticateToken, OfferLetter);
 app.use("/api/PersonalDetails", authenticateToken, PersonalDetails);
 app.use("/api/Religions", authenticateToken, Religions);
-
+app.use("/api/uploadCv", authenticateToken, uploadCv);
 
 async function startServer() {
   await syncDatabase();

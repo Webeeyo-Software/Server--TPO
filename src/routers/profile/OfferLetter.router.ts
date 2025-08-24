@@ -14,6 +14,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post("/offer-letters/upload", upload.single("file"), uploadOfferLetter);
-router.get("/offer-letters/:id", getOfferLetterById);
+router.post("/upload", upload.single("file"), uploadOfferLetter);
+router.get("/:id", getOfferLetterById);
 export default router;
