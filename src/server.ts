@@ -7,7 +7,7 @@ import DepartmentRouter from './routers/profile/Department.router';
 import BloodgroupRouter from './routers/profile/Bloodgroup.router';
 import companies from './routers/companies/companies';
 import TPORegistrations from "./routers/tpoRegistration/TPORegistration.routes";
-import application from "./routers/applications/Application"
+import application from "./routers/applications/application"
 dotenv.config();
 
 const app: Application = express();
