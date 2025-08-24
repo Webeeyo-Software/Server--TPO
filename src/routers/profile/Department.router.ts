@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { createDepartments } from "../../controllers/profile/Department.controller";
+import { createDepartments,getAllDepartments } from "../../controllers/profile/Department.controller";
 
 const DepartmentRouter = Router();
 
 DepartmentRouter.post("/", createDepartments);
+DepartmentRouter.get("/", getAllDepartments);
 
 export default DepartmentRouter;

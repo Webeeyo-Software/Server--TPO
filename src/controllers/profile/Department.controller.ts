@@ -22,5 +22,13 @@ export const createDepartments = async (req:Request,res:Response) =>{
   console.error("Error creating department:", error);
   return res.status(500).json({error: (error as Error).message});
 }
-
-}
+};
+export const getAllDepartments = async (req:Request,res:Response) =>{
+  try{
+    const departments = await Departments.findAll({attributes:['id','deptName']});
+    return res.status(200).json(departments);
+  }catch(error){
+    console.error("Error fetching departments:", error);
+    return res.status(500).json({error: (error as Error).message});
+  }
+};

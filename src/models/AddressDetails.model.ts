@@ -95,3 +95,5 @@ export interface AddressDetailsCreationAttributes extends Optional<AddressDetail
     return AddressDetails;
 
  }
+
+       

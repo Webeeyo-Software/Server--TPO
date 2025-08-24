@@ -21,6 +21,12 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
+ app.use(cors({
+  origin:'exp://192.168.1.30:8081',
+  methods:["POST","GET","PUT","DELETE"],
+  allowedHeaders:['content-type','Authorization']
+ }))
+
 
 app.use("/auth", authRoutes);
 
