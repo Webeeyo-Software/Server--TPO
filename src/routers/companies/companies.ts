@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import { searchCompanies } from '../../controllers/companies/CompaniesController';
 import { getCompanyData } from "../../controllers/companies/CompanyDataController";
+import { getPlacementDriveData } from "../../controllers/companies/CompanyDataController";
 
 const router = Router();
 
@@ -13,8 +14,9 @@ const router = Router();
  *   limit  (number, default=10, max=50)
  *   status (Active|Inactive, default=Active)
  */
+ 
 router.get('/search', searchCompanies);
 router.get("/:companyId", getCompanyData);
-
+router.get("/placement-drive/:driveId", getPlacementDriveData);
 
 export default router;

@@ -7,7 +7,7 @@ import DepartmentRouter from './routers/profile/Department.router';
 import BloodgroupRouter from './routers/profile/Bloodgroup.router';
 import companies from './routers/companies/companies';
 import TPORegistrations from "./routers/tpoRegistration/TPORegistration.routes";
-import application from "./routers/applications/application"
+import application from "./routers/applications/application";
 dotenv.config();
 
 const app: Application = express();
@@ -21,7 +21,6 @@ app.use('/api/profile/departments', DepartmentRouter);
 app.use('/api/profile/bloodgroups', BloodgroupRouter);
 app.use("/api/tpo-registrations", TPORegistrations );
 app.use('/api/applications', application);
-
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
