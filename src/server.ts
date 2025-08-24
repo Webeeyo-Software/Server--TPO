@@ -20,7 +20,8 @@ app.use('/api/profile/religions', Religionsrouter);
 app.use('/api/profile/departments', DepartmentRouter);
 app.use('/api/profile/bloodgroups', BloodgroupRouter);
 app.use("/api/tpo-registrations", TPORegistrations );
-app.use("/api/applications", application);
+app.use('/api/applications', application);
+
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');

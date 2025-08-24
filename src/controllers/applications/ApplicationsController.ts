@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import db from "../../models";
 
-const Applications = db.Application;
+const Applications = db.Applications;
 
 const getApplicationStatus = async (req: Request, res: Response) => {
   try {
