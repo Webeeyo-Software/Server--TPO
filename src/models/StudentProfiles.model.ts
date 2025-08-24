@@ -121,10 +121,6 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "registrationNo",
         as: "uploadCVS",
       });
-      StudentProfiles.hasMany(models.AddressDetails, {
-        foreignKey: "registrationNo",
-        as: "AddressDetails",
-      });
     }
   }
 

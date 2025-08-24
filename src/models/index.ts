@@ -25,7 +25,7 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-  // console.log("Here is the DB Object : ", db);
+//   // console.log("Here is the DB Object : ", db);
 
   
 

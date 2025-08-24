@@ -14,6 +14,17 @@ import notice from './routers/notices/Notice';
 import question from './routers/questionsBank/QuestionBankRouter';
 import { syncDatabase } from "./models";
 import { authenticateToken } from "./middleware/authMiddleware";
+import AcademicDetails from './routers/profile/AcademicDetails.router';
+import AddressDetails from './routers/profile/AddressDetails.router';
+import Bloodgroup from './routers/profile/Bloodgroup.router';
+import Categories from './routers/profile/Categories.router';
+import Department from './routers/profile/Department.router';
+import ExaminationDetails from './routers/profile/ExaminationDetails.router';
+import Nationalities from './routers/profile/Nationalities.router';
+import OfferLetter from './routers/profile/OfferLetter.router';
+import PersonalDetails from './routers/profile/PersonalDetails.router';
+import Religions from './routers/profile/Religions.router';
+import uploadCv from './routers/profile/UploadCV.router';
 dotenv.config();
 const app = express();
 
@@ -21,7 +32,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-
 app.use("/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => {
@@ -41,7 +51,17 @@ app.use("/api/tpo-registrations", authenticateToken, TPORegistrations);
 app.use("/api/applications", authenticateToken, application);
 app.use("/api/notice", authenticateToken, notice);
 app.use("/api/question", authenticateToken, question);
-
+app.use("/api/AcademicDetails", authenticateToken, AcademicDetails);
+app.use("/api/Bloodgroup", authenticateToken, Bloodgroup);
+app.use("/api/AddressDetails", authenticateToken, AddressDetails);
+app.use("/api/Categories", authenticateToken, Categories);
+app.use("/api/Department", authenticateToken, Department);
+app.use("/api/ExaminationDetails", authenticateToken, ExaminationDetails);
+app.use("/api/Nationalities", authenticateToken, Nationalities);
+app.use("/api/OfferLetter", authenticateToken, OfferLetter);
+app.use("/api/PersonalDetails", authenticateToken, PersonalDetails);
+app.use("/api/Religions", authenticateToken, Religions);
+app.use("/api/uploadCv", authenticateToken, uploadCv);
 
 async function startServer() {
   await syncDatabase();

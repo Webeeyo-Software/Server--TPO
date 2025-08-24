@@ -98,6 +98,7 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
+      modelName: "ExaminationDetails",
       tableName: "ExaminationDetails",
       timestamps: true,
     }
