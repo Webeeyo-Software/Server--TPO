@@ -20,7 +20,7 @@ export const createCategory = async (req: Request, res: Response) => {
 };
 export const getAllCategories = async (req: Request, res: Response) => {
     try {
-        const categories = await Categories.findAll({ attributes: ['id', 'categoryName'] });
+        const categories = await Categories.findAll({ attributes: [ 'categoryName'] });
         res.status(200).json(categories);
     } catch (error) {
         console.error("Error fetching categories:", error);

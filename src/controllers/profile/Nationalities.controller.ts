@@ -20,7 +20,7 @@ export const createNationality = async (req: Request, res: Response) => {
 };
 export const getAllNationalities = async (req: Request, res: Response) => {
     try {
-        const nationalities = await Nationalities.findAll({ attributes: ['id', 'nationalityName'] });
+        const nationalities = await Nationalities.findAll({ attributes: [ 'nationalityName'] });
         res.status(200).json(nationalities);
     } catch (error) {
         console.error("Error fetching nationalities:", error);

@@ -13,7 +13,7 @@ export const createBloodGroup = async (req: Request, res: Response) => {
 };
 export const getAllBloodGroups = async (req: Request, res: Response) => {
     try {
-        const bloodGroups = await BloodGroups.findAll({ attributes: ['id', 'bloodGroup'] });
+        const bloodGroups = await BloodGroups.findAll({ attributes: ['bloodGroup'] });
         res.status(200).json(bloodGroups);
     } catch (error) {
         console.error("Error fetching blood groups:", error);
