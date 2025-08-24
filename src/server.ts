@@ -12,9 +12,7 @@ import departmentRouter from "./routers/profile/Department.router";
 import bloodgroupRouter from "./routers/profile/Bloodgroup.router";
 
 import { syncDatabase } from "./models";
-import { sendOtp, verifyOtp } from "./controllers/auth/sentController";
-import { resetPasswordByEmail } from "./controllers/auth/resetpassword";
-import { authenticateToken } from "./middleware/authMiddleware"; 
+import { authenticateToken } from "./middleware/authMiddleware";
 dotenv.config();
 const app = express();
 
@@ -30,7 +28,11 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/companies", authenticateToken, companies);
-app.use("/api/profile/personal-details", authenticateToken, personalDetailsRouter);
+app.use(
+  "/api/profile/personal-details",
+  authenticateToken,
+  personalDetailsRouter
+);
 app.use("/api/profile/religions", authenticateToken, religionsRouter);
 app.use("/api/profile/departments", authenticateToken, departmentRouter);
 app.use("/api/profile/bloodgroups", authenticateToken, bloodgroupRouter);
