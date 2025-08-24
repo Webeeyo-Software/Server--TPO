@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import db from "../../models";
+
 const { QuestionBank } = db;
 
 export const deleteQuestion = async (req: Request, res: Response) => {
