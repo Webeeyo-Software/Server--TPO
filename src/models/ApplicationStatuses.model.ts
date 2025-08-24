@@ -21,7 +21,7 @@ module.exports = (sequelize: Sequelize) => {
 
     static associate(models: any) {
       ApplicationStatuses.hasMany(models.Applications, {
-        foreignKey: "id",
+        foreignKey: "statusId",
         as: "applications",
       });
     }
