@@ -31,13 +31,13 @@ export const login = async (req: Request, res: Response) => {
       { expiresIn: "15d" }
     );
 
-    res.json({
+    return res.json({
       token,
       userId: user.id,
       role,
       firstname: user.firstName,
     });
   } catch (err) {
-    res.status(500).json({ error: "Internal server error", details: err });
+    return res.status(500).json({ error: "Internal server error", details: err });
   }
 };

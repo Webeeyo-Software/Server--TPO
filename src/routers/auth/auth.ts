@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/login", login);
 router.post("/register",createUser);
 router.post("/verification",sendOtp);
-router.post("/otp-verifivation",verifyOtp);
+router.post("/otp-verification",verifyOtp);
 router.post("/reset-password",resetPasswordByEmail);
 
 export default router;
