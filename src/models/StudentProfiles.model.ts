@@ -116,6 +116,10 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         foreignKey: "registrationNo",
         as: "academicDetails",
       });
+      StudentProfiles.hasMany(models.UploadCVS, {
+        foreignKey: "registrationNo",
+        as: "uploadCVS",
+      });
     }
   }
 
