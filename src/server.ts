@@ -10,7 +10,8 @@ import personalDetailsRouter from "./routers/profile/PersonalDetails.router";
 import religionsRouter from "./routers/profile/Religions.router";
 import departmentRouter from "./routers/profile/Department.router";
 import bloodgroupRouter from "./routers/profile/Bloodgroup.router";
-
+import notice from './routers/notices/Notice';
+import question from './routers/questionsBank/QuestionBankRouter';
 import { syncDatabase } from "./models";
 import { authenticateToken } from "./middleware/authMiddleware";
 dotenv.config();
@@ -38,6 +39,9 @@ app.use("/api/profile/departments", authenticateToken, departmentRouter);
 app.use("/api/profile/bloodgroups", authenticateToken, bloodgroupRouter);
 app.use("/api/tpo-registrations", authenticateToken, TPORegistrations);
 app.use("/api/applications", authenticateToken, application);
+app.use("/api/notice", authenticateToken, notice);
+app.use("/api/question", authenticateToken, question);
+
 
 async function startServer() {
   await syncDatabase();
