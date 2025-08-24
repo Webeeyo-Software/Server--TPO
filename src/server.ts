@@ -1,50 +1,71 @@
-import express, {Request, Response, Application } from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import sequelize, { syncDatabase } from './models';
-import router from './routers/profile/PersonalDetails.router';
-import Religionsrouter from './routers/profile/Religions.router';
-import DepartmentRouter from './routers/profile/Department.router';
-import BloodgroupRouter from './routers/profile/Bloodgroup.router';
-import NationalitiesRouter from './routers/profile/Nationalities.router';
-import Addressrouter from './routers/profile/AddressDetails.router';
-import ExaminationDetailsRouter from './routers/profile/ExaminationDetails.router';
-import AcademicDetailsrouter from './routers/profile/AcademicDetails.router';
-import categoryrouter from './routers/profile/Categories.router';
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
 
-
+import authRoutes from "./routers/auth/auth";
+import companies from "./routers/companies/companies";
+import TPORegistrations from "./routers/tpoRegistration/TPORegistration.routes";
+import application from "./routers/applications/application";
+import personalDetailsRouter from "./routers/profile/PersonalDetails.router";
+import religionsRouter from "./routers/profile/Religions.router";
+import departmentRouter from "./routers/profile/Department.router";
+import bloodgroupRouter from "./routers/profile/Bloodgroup.router";
+import notice from './routers/notices/Notice';
+import question from './routers/questionsBank/QuestionBankRouter';
+import { syncDatabase } from "./models";
+import { authenticateToken } from "./middleware/authMiddleware";
+import AcademicDetails from './routers/profile/AcademicDetails.router';
+import AddressDetails from './routers/profile/AddressDetails.router';
+import Bloodgroup from './routers/profile/Bloodgroup.router';
+import Categories from './routers/profile/Categories.router';
+import Department from './routers/profile/Department.router';
+import ExaminationDetails from './routers/profile/ExaminationDetails.router';
+import Nationalities from './routers/profile/Nationalities.router';
+import OfferLetter from './routers/profile/OfferLetter.router';
+import PersonalDetails from './routers/profile/PersonalDetails.router';
+import Religions from './routers/profile/Religions.router';
+import uploadCv from './routers/profile/UploadCV.router';
 dotenv.config();
-const app: Application = express();
-const PORT = process.env.PORT || 3000;
-//  app.use(cors({
-//   origin:'exp://192.168.1.30:8081',
-//   methods:["POST","GET","PUT","DELETE"],
-//   allowedHeaders:['content-type','Authorization']
-//  }))
+const app = express();
 
-
-
+app.use(bodyParser.json());
 app.use(express.json());
 
-app.use('/api/profile/personal-details', router);
-app.use('/api/profile/religions', Religionsrouter);
-app.use('/api/profile/departments', DepartmentRouter);
-app.use('/api/profile/bloodgroups', BloodgroupRouter);
-app.use('/api/profile/nationalities', NationalitiesRouter);
-app.use('/api/profile/address-details', Addressrouter);
-app.use('/api/profile/examination-details', ExaminationDetailsRouter);
-app.use('/api/profile/academic-details', AcademicDetailsrouter);
-app.use('/api/profile/categories', categoryrouter);
+const PORT = process.env.PORT || 3000;
+app.use("/auth", authRoutes);
 
-
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World');
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello World");
 });
 
-async function startServer(){
+app.use("/api/companies", authenticateToken, companies);
+app.use(
+  "/api/profile/personal-details",
+  authenticateToken,
+  personalDetailsRouter
+);
+app.use("/api/profile/religions", authenticateToken, religionsRouter);
+app.use("/api/profile/departments", authenticateToken, departmentRouter);
+app.use("/api/profile/bloodgroups", authenticateToken, bloodgroupRouter);
+app.use("/api/tpo-registrations", authenticateToken, TPORegistrations);
+app.use("/api/applications", authenticateToken, application);
+app.use("/api/notice", authenticateToken, notice);
+app.use("/api/question", authenticateToken, question);
+app.use("/api/AcademicDetails", authenticateToken, AcademicDetails);
+app.use("/api/Bloodgroup", authenticateToken, Bloodgroup);
+app.use("/api/AddressDetails", authenticateToken, AddressDetails);
+app.use("/api/Categories", authenticateToken, Categories);
+app.use("/api/Department", authenticateToken, Department);
+app.use("/api/ExaminationDetails", authenticateToken, ExaminationDetails);
+app.use("/api/Nationalities", authenticateToken, Nationalities);
+app.use("/api/OfferLetter", authenticateToken, OfferLetter);
+app.use("/api/PersonalDetails", authenticateToken, PersonalDetails);
+app.use("/api/Religions", authenticateToken, Religions);
+app.use("/api/uploadCv", authenticateToken, uploadCv);
+
+async function startServer() {
   await syncDatabase();
-  app.listen(PORT, ()=>{
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
 }
