@@ -6,7 +6,7 @@ const Notices = db.Notices;
 export const getNotices = async (_req: Request, res: Response) => {
   try {
     const notices = await Notices.findAll({
-      attributes: ["id", "title", "description", "createdBy"], // 👈 only select these
+      attributes: ["id", "title", "description"], 
     });
 
     res.json(notices);

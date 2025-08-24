@@ -3,14 +3,13 @@ import db from "../../models";
 
 const Notices = db.Notices;
 
-// Get a single notice by id (only title, description, pdf)
 export const getNoticeById = async (req: Request, res: Response) => {
   try {
     const { noticeId } = req.params;
 
     const notice = await Notices.findOne({
       where: { id: noticeId },
-      attributes: ["title", "description", "pdfUrl"],
+      attributes: ["title", "description", "pdfUrl","createdBy"],
     });
 
     if (!notice) {
