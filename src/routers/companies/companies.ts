@@ -1,22 +1,24 @@
-// routes/companies.ts
 import { Router } from 'express';
-import { searchCompanies } from '../../controllers/companies/CompaniesController';
-import { getCompanyData } from "../../controllers/companies/CompanyDataController";
-import { getPlacementDriveData } from "../../controllers/companies/CompanyDataController";
+import { 
+  searchCompanies, 
+  filterforCompanies, 
+  filterforPlacementDrives 
+} from '../../controllers/companies/CompaniesController';
+import { 
+  getCompanyData, 
+  getPlacementDriveData 
+} from "../../controllers/companies/CompanyDataController";
 
 const router = Router();
 
-/**
- * GET /api/companies/search
- * Query params:
- *   search (string, optional)
- *   page   (number, default=1)
- *   limit  (number, default=10, max=50)
- *   status (Active|Inactive, default=Active)
- */
- 
 router.get('/search', searchCompanies);
-router.get("/:companyId", getCompanyData);
-router.get("/placement-drive/:driveId", getPlacementDriveData);
+
+router.get('/filter', filterforCompanies);
+
+router.get('/placement-drives', filterforPlacementDrives);
+
+router.get('/placement-drives/:driveId', getPlacementDriveData);
+
+router.get('/:companyId', getCompanyData);
 
 export default router;
