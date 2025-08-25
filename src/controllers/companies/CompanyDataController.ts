@@ -4,9 +4,7 @@ import db from "../../models";
 const Companies = db.Companies;
 const PlacementDrives = db.PlacementDrives;
 
-/**
- * Get company details by companyId
- */
+
 export const getCompanyData = async (req: Request, res: Response) => {
   try {
     const { companyId } = req.params;
@@ -27,28 +25,9 @@ export const getCompanyData = async (req: Request, res: Response) => {
       ],
     });
 
-    const companyDatafromPlacementDrives = await PlacementDrives.findOne({
-      where: { companyId },
-      attributes: [
-        "companyId",
-        "position",
-        "eligibilityCriteria",
-        "jobDescription",
-        "ctc",
-        "applicationDeadline",
-        "minPack",
-        "maxPack",
-      ],
-    });
-
-    if (!companyDatafromCompanies && !companyDatafromPlacementDrives) {
-      return res.status(404).json({ success: false, message: "Company not found" });
-    }
-
     return res.json({
       success: true,
       company: companyDatafromCompanies,
-      placementDrive: companyDatafromPlacementDrives,
     });
   } catch (error: any) {
     console.error("Error in getCompanyData:", error);

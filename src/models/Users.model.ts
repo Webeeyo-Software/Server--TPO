@@ -10,33 +10,111 @@ interface UsersAttributes {
   createdAt?: Date;
   updatedAt?: Date;
   isDeleted?: boolean;
-  resetToken?: string | null;
-  resetTokenExpiry?: number | null;
+  profile_url?: string | null;
 }
 
 interface UsersCreationAttributes
   extends Optional<
     UsersAttributes,
-    "id" | "createdAt" | "updatedAt" | "isDeleted" | "resetToken" | "resetTokenExpiry"
+    "id" | "createdAt" | "updatedAt" | "isDeleted" | "profile_url"
   > {}
 
 module.exports = (sequelize: Sequelize, DataTypes: any) => {
-  class Users extends Model<UsersAttributes, UsersCreationAttributes> implements UsersAttributes {
+  class Users
+    extends Model<UsersAttributes, UsersCreationAttributes>
+    implements UsersAttributes
+  {
     public id!: string;
     public email!: string;
     public password!: string;
     public firstName!: string;
     public lastName!: string;
     public isDeleted?: boolean;
-    public resetToken?: string | null;
-    public resetTokenExpiry?: number | null;
+    public profile_url?: string | null;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 
     static associate(models: any) {
-      Users.hasOne(models.UserRole, { foreignKey: "userId", as: "userRoles" });
-      // other associations...
-    }
+  Users.hasOne(models.UserRole, {
+    foreignKey: "userId",
+    as: "userRoles",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasOne(models.StudentProfiles, {
+    foreignKey: "userId",
+    as: "studentProfiles",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasOne(models.Companies, {
+    foreignKey: "userId",
+    as: "companies",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.PlacementDrives, {
+    foreignKey: "userId",
+    as: "placementDrives",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.Notifications, {
+    foreignKey: "userId",
+    as: "notifications",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.Notices, {
+    foreignKey: "userId",
+    as: "notices",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.NoticeReads, {
+    foreignKey: "userId",
+    as: "noticeReads",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.Applications, {
+    foreignKey: "userId",
+    as: "applications",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.QueryResponses, {
+    foreignKey: "userId",
+    as: "queryResponses",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.StudentQueries, {
+    foreignKey: "userId",
+    as: "studentQueries",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.TPORegistrations, {
+    foreignKey: "userId",
+    as: "TPORegistrations",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.Feedback, {
+    foreignKey: "userId",
+    as: "feedbacks",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+  Users.hasMany(models.Documents, {
+    foreignKey: "userId",
+    as: "documents",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+}
+
 
     public async isValidPassword(password: string): Promise<boolean> {
       return bcrypt.compare(password, this.password);
@@ -72,12 +150,8 @@ module.exports = (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      resetToken: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-      },
-      resetTokenExpiry: {
-        type: DataTypes.BIGINT,
+      profile_url: {
+        type: DataTypes.STRING(500),
         allowNull: true,
       },
       createdAt: {
